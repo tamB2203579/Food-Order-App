@@ -40,7 +40,7 @@ const OnBoardScreen = ({ navigation }) => {
           <View style={style.indicator} />
         </View>
         <PrimaryButton
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('Login')}
           title="Get Started"
         />
       </View>

@@ -9,7 +9,7 @@ const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
 const HomeScreen = ({ navigation }) => {
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(-1);
   const [filteredFoods, setFilteredFoods] = React.useState(foods);
   const [searchQuery, setSearchQuery] = React.useState('');
 
@@ -70,7 +70,7 @@ const HomeScreen = ({ navigation }) => {
             <Image source={food.image} style={{ height: 120, width: 120 }} />
           </View>
           <View style={{ marginHorizontal: 20 }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold'}}>{food.name}</Text>
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{food.name}</Text>
           </View>
           <View
             style={{
@@ -80,7 +80,7 @@ const HomeScreen = ({ navigation }) => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{food.price}VNĐ</Text>
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{food.price} VND</Text>
             <View style={style.addToCardBtn}>
               <Icon name="add" size={20} color={COLORS.white} />
             </View>
@@ -106,7 +106,7 @@ const HomeScreen = ({ navigation }) => {
             placeholder="Search"
             style={style.input}
             value={searchQuery}
-            onChangeText={(text) => handleSearch(text)}  
+            onChangeText={(text) => handleSearch(text)}
           />
         </View>
       </View>

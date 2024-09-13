@@ -1,13 +1,38 @@
-import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList, TouchableHighlight, Image } from 'react-native';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React from 'react';
 import categories from '../constants/categories';
+import foods from '../constants/foods';
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('screen');
+const cardWidth = width / 2 - 20;
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(0);
+  const [filteredFoods, setFilteredFoods] = React.useState(foods);
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const handleSearch = (text) => {
+    setSearchQuery(text);
+    const filteredFoods = foods.filter((food) => {
+      const name = food.name.toLowerCase();
+      const query = text.toLowerCase();
+      return name.includes(query);
+    });
+    setFilteredFoods(filteredFoods);
+  };
+
+  const filterFoodsByCategory = (categoryName) => {
+    const filteredFoods = foods.filter((food) => {
+      if (Array.isArray(food.category)) {
+        return food.category.includes(categoryName);
+      } else {
+        return food.category === categoryName;
+      }
+    });
+    setFilteredFoods(filteredFoods);
+  };
 
   const ListCategories = () => {
     return (
@@ -16,17 +41,53 @@ const HomeScreen = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={style.categoriesListContainer}>
         {categories.map((category, index) => (
-          <TouchableOpacity key={index} activeOpacity={0.8} onPress={() => setSelectedCategoryIndex(index)}>
+          <TouchableOpacity
+            key={index}
+            activeOpacity={0.8}
+            onPress={() => {
+              setSelectedCategoryIndex(index);
+              filterFoodsByCategory(category.name);
+            }}>
             <View style={{
               backgroundColor: selectedCategoryIndex == index ? COLORS.primary : COLORS.secondary,
               ...style.categoryBtn,
             }}>
-              <Text style={{ fontSize: 15, fontWeight: 'bold', color: selectedCategoryIndex == index ? COLORS.white : COLORS.dark }}>{category.name}</Text>
+              <Text style={{ fontSize: 15, fontWeight: 'bold', color: selectedCategoryIndex == index ? COLORS.white : COLORS.dark }}>
+                {category.name}
+              </Text>
             </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
-    )
+    );
+  };
+
+  const Card = ({ food }) => {
+    return (
+      <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9} onPress={() => navigation.navigate('DetailsScreen', food)}>
+        <View style={style.card}>
+          <View style={{ alignItems: 'center', top: -40 }}>
+            <Image source={food.image} style={{ height: 120, width: 120 }} />
+          </View>
+          <View style={{ marginHorizontal: 20 }}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold'}}>{food.name}</Text>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              marginHorizontal: 20,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{food.price}VNĐ</Text>
+            <View style={style.addToCardBtn}>
+              <Icon name="add" size={20} color={COLORS.white} />
+            </View>
+          </View>
+        </View>
+      </TouchableHighlight>
+    );
   }
 
   return (
@@ -41,12 +102,23 @@ const HomeScreen = () => {
       <View style={{ marginTop: 30, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
         <View style={style.searchContainer}>
           <Icon name="search" size={25} style={{ marginLeft: 20 }} />
-          <TextInput placeholder="Search" style={style.input} />
+          <TextInput
+            placeholder="Search"
+            style={style.input}
+            value={searchQuery}
+            onChangeText={(text) => handleSearch(text)}  
+          />
         </View>
       </View>
       <View>
         <ListCategories />
       </View>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        numColumns={2}
+        data={filteredFoods}
+        renderItem={({ item }) => <Card food={item} />}
+      />
     </SafeAreaView>
   );
 };
@@ -91,5 +163,26 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 5,
     flexDirection: 'row',
+  },
+  card: {
+    height: 220,
+    width: cardWidth,
+    marginHorizontal: 10,
+    marginBottom: 20,
+    marginTop: 50,
+    borderRadius: 15,
+    backgroundColor: COLORS.white,
+    shadowColor: COLORS.light,
+    shadowOffset: { width: 0, height: 15 },
+    shadowOpacity: 1,
+    shadowRadius: 10,
+  },
+  addToCardBtn: {
+    height: 30,
+    width: 30,
+    borderRadius: 20,
+    backgroundColor: COLORS.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });

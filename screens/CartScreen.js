@@ -9,6 +9,11 @@ const CartScreen = () => {
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}> 
         <View style={styles.cartCard}>
           <Image source={item.image} style={{width: 80, height: 80}}/>
+
+          <View style={{height: 100, marginLeft: 10, paddingVertical: 20, flex: 1}}>
+            <Text style={{fontWeight: 'bold', fontSize: 16}}>{item.name}</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.price} VND</Text>
+          </View>
         </View>
       </TouchableHighlight>
     );

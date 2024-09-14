@@ -8,10 +8,12 @@ const DetailsScreen = ({ navigation, route }) => {
   const item = route.params;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white,}}
+   
+    >
       <View style={style.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Details</Text>
+        <Text style={{fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center'}}>Details</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
       <View
@@ -29,18 +31,22 @@ const DetailsScreen = ({ navigation, route }) => {
                 justifyContent:"space-between", 
                 alignItems:'center',
                 }}>
-                  <Text style={{fontSize: 25, fontWeight: 'bold', color: COLORS.white}}>{item.name}                   
-                  </Text>
+                  {/* title */}
+                  <Text style={{fontSize: 25, fontWeight: 'bold', color: COLORS.white}}>{item.name}</Text>
+                  {/* icon */}
                   <View style={style.iconContainer}>
                     <Icon name="favorite-border" color={COLORS.primary} size={25}/>
                   </View>
-                </View>
-                <Text style={style.detailsText}>
-                  {item.details}
-                </Text>
-                <View style={{marginTop: 40, marginBottom: 40 }}>
-                  <SecondaryButton title="Add To Cart"/>
-                  </View>
+            </View>
+            
+            {/* detail */}
+            <Text style={style.detailsText}>{item.details}</Text>
+            
+            {/* button */}
+            <View style={{marginTop: 40, marginBottom: 40 }}>
+              <SecondaryButton title="Add To Cart"/>
+            </View>
+
           </View>
         </ScrollView>
     </SafeAreaView>

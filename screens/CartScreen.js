@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, Dimensions, StatusBar } from 'react-native';
 import COLORS from '../constants/colors';
 import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -6,8 +6,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { PrimaryButton } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 
-const CartScreen = () => {
-  const navigation = useNavigation();
+
+const CartScreen = ({navigation}) => {
   const CartCard = ({item}) => {
     return(
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}> 
@@ -40,14 +40,14 @@ const CartScreen = () => {
     );
   }
   return (
-    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
+    <SafeAreaView style={{backgroundColor: COLORS.primary, flex: 1}}>
       <View style={styles.header}>
         <AntDesign name="left" size={28} color="black" 
         // style={styles.backIcon}
-        onPress={() => navigation.goBack()}/>
+        onPress={navigation.goBack}/>
         <Text style={{fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center'}}>Cart</Text>
       </View>
-      <FlatList 
+      <FlatList style={{backgroundColor: COLORS.white}}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 80}}
       data={foods}
@@ -79,11 +79,12 @@ const CartScreen = () => {
 
 const styles = StyleSheet.create({
   header: {
-    paddingVertical: 20,
+    paddingVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 20,
+    backgroundColor: COLORS.primary,
+    width: '100%'
   },  
   cartCard: {
     height: 100,
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   itemName: {
-    fontSize: 16,
+    fontSize: 14,
   },
   ratingImage: {
     width: 65,

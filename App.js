@@ -21,19 +21,7 @@ function App() {
           gestureEnabled: false
         }}/>
         <Stack.Screen name="Details" component={DetailsScreen}/>
-        <Stack.Screen name="Cart" component={CartScreen} 
-        options={{
-          headerStyle: {
-            backgroundColor: "#F9813A",
-          },
-          title: "Order",
-          headerTitleStyle: {
-            fontSize: 22,
-            fontWeight: 'bold'
-          },
-          headerShown: true
-        }}
-        />
+        <Stack.Screen name="Cart" component={CartScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

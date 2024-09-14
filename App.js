@@ -18,7 +18,6 @@ function App() {
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
         <Stack.Screen name="Home" component={HomeScreen} options={{
-          headerShown: false,
           gestureEnabled: false
         }}/>
         <Stack.Screen name="Details" component={DetailsScreen}/>

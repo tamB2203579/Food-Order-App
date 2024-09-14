@@ -10,9 +10,10 @@ const CartScreen = () => {
         <View style={styles.cartCard}>
           <Image source={item.image} style={{width: 80, height: 80}}/>
 
-          <View style={{height: 100, marginLeft: 10, paddingVertical: 20, flex: 1}}>
-            <Text style={{fontWeight: 'bold', fontSize: 16}}>{item.name}</Text>
-            <Text style={{fontWeight: 'bold', fontSize: 17}}>{item.price} VND</Text>
+          <View style={styles.detailsContainer}>
+            <Text style={styles.itemName}>{item.name}</Text>
+            <Image source={item.rating} style={styles.ratingImage}/>
+            <Text style={styles.itemPrice}>{item.price} VND</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -55,7 +56,28 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 5, height: 15 },
     shadowOpacity: 1,
     shadowRadius: 10,
-  }
+  },
+  detailsContainer: {
+    height: 100,
+    marginLeft: 10,
+    paddingVertical: 20,
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  itemName: {
+    fontSize: 16,
+  },
+  ratingImage: {
+    width: 60, 
+    height: 16,
+    resizeMode: 'contain',
+    alignSelf: 'flex-start', 
+  },
+  itemPrice: {
+    fontWeight: 'bold',
+    fontSize: 17,
+    color: "#555",
+  },
 });
 
 

@@ -5,7 +5,7 @@ const foods = [
     name: 'Crispy',
     price: '59,000',
     image: require('../assets/popular/crispy.png'),
-    rating: 4.5,
+    rating: require('../assets/rating/rating-45.png'),
   },
   {
     id: '2',
@@ -13,7 +13,7 @@ const foods = [
     name: 'Big Mac Burger',
     price: '76,000',
     image: require('../assets/popular/burger.png'),
-    rating: 5,
+    rating: require('../assets/rating/rating-50.png'),
   },
   {
     id: '3',
@@ -21,7 +21,7 @@ const foods = [
     name: 'Cheese Bacon',
     price: '56,000',
     image: require('../assets/burgers/cheesebacon.png'),
-    rating: 3.5,
+    rating: require('../assets/rating/rating-35.png'),
   },
   {
     id: '4',
@@ -29,7 +29,7 @@ const foods = [
     name: 'Cheese Burger',
     price: '39,000',
     image: require('../assets/burgers/cheeseburger.png'),
-    rating: 2,
+    rating: require('../assets/rating/rating-20.png'),
   },
   {
     id: '5',
@@ -37,7 +37,7 @@ const foods = [
     name: 'Cheese Deluxe',
     price: '89,000',
     image: require('../assets/burgers/cheesedeluxe.png'),
-    rating: 4,
+    rating: require('../assets/rating/rating-40.png'),
   },
   {
     id: '6',
@@ -45,7 +45,7 @@ const foods = [
     name: 'Double Cheese Burger',
     price: '66,000',
     image: require('../assets/burgers/doublecheeseburger.png'),
-    rating: 3,
+    rating: require('../assets/rating/rating-30.png'),
   },
   {
     id: '7',
@@ -53,7 +53,7 @@ const foods = [
     name: 'Nuggets',
     price: '49,000',
     image: require('../assets/popular/nuggets.png'),
-    rating: 4.5,
+    rating: require('../assets/rating/rating-45.png'),
   },
   {
     id: '8',
@@ -61,7 +61,7 @@ const foods = [
     name: 'French fries',
     price: '29,000',
     image: require('../assets/snacks_sides/chips.png'),
-    rating: 4,
+    rating: require('../assets/rating/rating-40.png'),
   },
   {
     id: '9',
@@ -69,7 +69,7 @@ const foods = [
     name: 'Burrito',
     price: '39,000',
     image: require('../assets/snacks_sides/burrito.png'),
-    rating: 2.5,
+    rating: require('../assets/rating/rating-25.png'),
   },
   {
     id: '10',
@@ -77,7 +77,7 @@ const foods = [
     name: 'Hot Cakes',
     price: '35,000',
     image: require('../assets/snacks_sides/hotcakes.png'),
-    rating: 3.5,
+    rating: require('../assets/rating/rating-35.png'),
   },
   {
     id: '11',
@@ -85,7 +85,7 @@ const foods = [
     name: 'Coca Cola',
     price: '22,000',
     image: require('../assets/drinks_sweets/coke.png'),
-    rating: 3,
+    rating: require('../assets/rating/rating-30.png'),
   },
   {
     id: '12',
@@ -93,7 +93,7 @@ const foods = [
     name: 'Fanta',
     price: '22,000',
     image: require('../assets/drinks_sweets/fanta.png'),
-    rating: 2,
+    rating: require('../assets/rating/rating-30.png'),
   },
   {
     id: '13',
@@ -101,7 +101,7 @@ const foods = [
     name: 'Sprite',
     price: '22,000',
     image: require('../assets/drinks_sweets/sprite.png'),
-    rating: 3.5,
+    rating: require('../assets/rating/rating-35.png'),
   },
   {
     id: '14',
@@ -109,7 +109,7 @@ const foods = [
     name: 'Caramel Sundae',
     price: '29,000',
     image: require('../assets/drinks_sweets/sundae1.png'),
-    rating: 4,
+    rating: require('../assets/rating/rating-40.png'),
   },
   {
     id: '15',
@@ -117,7 +117,7 @@ const foods = [
     name: 'Chocolate Sundae',
     price: '29,000',
     image: require('../assets/drinks_sweets/sundae2.png'),
-    rating: 4.5,
+    rating: require('../assets/rating/rating-45.png'),
   },
   {
     id: '16',
@@ -125,7 +125,7 @@ const foods = [
     name: 'Strawberry Sundae',
     price: '29,000',
     image: require('../assets/drinks_sweets/sundae3.png'),
-    rating: 3,
+    rating: require('../assets/rating/rating-30.png'),
   },
   {
     id: '17',
@@ -133,7 +133,7 @@ const foods = [
     name: 'Vanilla Icecream',
     price: '10,000',
     image: require('../assets/drinks_sweets/vanillacone.png'),
-    rating: 2.5,
+    rating: require('../assets/rating/rating-40.png'),
   },
 ];
 

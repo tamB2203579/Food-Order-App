@@ -7,7 +7,6 @@ import SignUpScreen from './screens/SignUpScreen';
 import HomeScreen from './screens/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen';
 import CartScreen from './screens/CartScreen';
-import AntDesign from '@expo/vector-icons/AntDesign';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,19 +21,7 @@ function App() {
           gestureEnabled: false
         }}/>
         <Stack.Screen name="Details" component={DetailsScreen}/>
-        <Stack.Screen name="Cart" component={CartScreen} 
-        options={{
-          headerStyle: {
-            backgroundColor: "#F9813A",
-          },
-          title: "Order",
-          headerTitleStyle: {
-            fontSize: 22,
-            fontWeight: 'bold'
-          },
-          headerShown: true
-        }}
-        />
+        <Stack.Screen name="Cart" component={CartScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

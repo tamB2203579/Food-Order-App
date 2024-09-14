@@ -13,7 +13,15 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: true}}>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="OnBoard" component={OnBoardScreen}/>
+        <Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="SignUp" component={SignUpScreen}/>
+        <Stack.Screen name="Home" component={HomeScreen} options={{
+          headerShown: false,
+          gestureEnabled: false
+        }}/>
+        <Stack.Screen name="Details" component={DetailsScreen}/>
         <Stack.Screen name="Cart" component={CartScreen} 
         options={{
           headerStyle: {
@@ -23,18 +31,10 @@ function App() {
           headerTitleStyle: {
             fontSize: 22,
             fontWeight: 'bold'
-          }
+          },
+          headerShown: true
         }}
         />
-        <Stack.Screen name="OnBoard" component={OnBoardScreen}/>
-        <Stack.Screen name="Login" component={LoginScreen}/>
-        <Stack.Screen name="SignUp" component={SignUpScreen}/>
-        <Stack.Screen name="Home" component={HomeScreen} options={{
-          headerShown: false,
-          gestureEnabled: false
-        }}/>
-        <Stack.Screen name="Details" component={DetailsScreen}/>
-        {/* <Stack.Screen name="Cart" component={CartScreen}/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -15,7 +15,14 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-      {/* <Stack.Screen name="Cart" component={CartScreen} 
+        <Stack.Screen name="OnBoard" component={OnBoardScreen}/>
+        <Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="SignUp" component={SignUpScreen}/>
+        <Stack.Screen name="Home" component={HomeScreen} options={{
+          gestureEnabled: false
+        }}/>
+        <Stack.Screen name="Details" component={DetailsScreen}/>
+        <Stack.Screen name="Cart" component={CartScreen} 
         options={{
           headerStyle: {
             backgroundColor: "#F9813A",
@@ -26,31 +33,9 @@ function App() {
             fontSize: 22,
             fontWeight: 'bold'
           },
-          headerLeft: () => (
-            <AntDesign name="left" size={24} color="black" 
-            onPress={() => navigation.goBack()}
-            />
-            // <AntDesign 
-            //   name="arrowleft" 
-            //   size={24} 
-            //   color="white" 
-            //   style={{ marginLeft: 10 }} 
-            //   onPress={() => navigation.navigate('Home')} // Tuỳ chỉnh hành động điều hướng
-            // />
-          ),
-          
+          headerShown: true
         }}
-        /> */}
-        <Stack.Screen name="OnBoard" component={OnBoardScreen}/>
-        <Stack.Screen name="Login" component={LoginScreen}/>
-        <Stack.Screen name="SignUp" component={SignUpScreen}/>
-        <Stack.Screen name="Home" component={HomeScreen} options={{
-          headerShown: false,
-          gestureEnabled: false,
-        
-        }}/>
-        <Stack.Screen name="Cart" component={CartScreen}/>
-        <Stack.Screen name="Details" component={DetailsScreen}/>
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

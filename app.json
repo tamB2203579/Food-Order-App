@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "chat-app",
-    "slug": "chat-app",
+    "name": "foody",
+    "slug": "foody",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

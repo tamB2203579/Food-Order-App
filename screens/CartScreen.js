@@ -4,8 +4,10 @@ import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { PrimaryButton } from '../components/Button';
+import { useNavigation } from '@react-navigation/native';
 
 const CartScreen = () => {
+  const navigation = useNavigation();
   const CartCard = ({item}) => {
     return(
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}> 
@@ -39,10 +41,12 @@ const CartScreen = () => {
   }
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
-      {/* <View style={styles.header}>
-        <AntDesign name="left" size={28} color="black" />
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Cart</Text>
-      </View> */}
+      <View style={styles.header}>
+        <AntDesign name="left" size={28} color="black" 
+        // style={styles.backIcon}
+        onPress={() => navigation.goBack()}/>
+        <Text style={{fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center'}}>Cart</Text>
+      </View>
       <FlatList 
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 80}}
@@ -78,6 +82,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginHorizontal: 20,
   },  
   cartCard: {

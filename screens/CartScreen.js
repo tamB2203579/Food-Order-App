@@ -3,6 +3,7 @@ import COLORS from '../constants/colors';
 import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { PrimaryButton } from '../components/Button';
 
 const CartScreen = () => {
   const CartCard = ({item}) => {
@@ -38,15 +39,35 @@ const CartScreen = () => {
   }
   return (
     <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <AntDesign name="left" size={28} color="black" />
         <Text style={{fontSize: 20, fontWeight: 'bold'}}>Cart</Text>
-      </View>
+      </View> */}
       <FlatList 
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 80}}
       data={foods}
       renderItem={({item}) => <CartCard item={item}/>}
+      
+      ListFooterComponentStyle = {{paddingHorizontal: 20, marginTop: 15}}
+      // total price
+      ListFooterComponent={() => (
+        <View>
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginVertical: 15,
+          }}>
+            <Text style={{fontWeight: 'bold', fontSize: 18}}>Total Price</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 18}}>100,000 VND</Text>
+
+          
+          </View>
+          <View style={{marginHorizontal: 30}}>
+            <PrimaryButton title="Place order"/> 
+          </View>
+        </View>
+      )}
       />
     </SafeAreaView>
   );

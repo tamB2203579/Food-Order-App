@@ -12,13 +12,18 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{headerShown: true}}>
         <Stack.Screen name="Cart" component={CartScreen} 
-        // options={{
-        //   headerStyle: {
-        //     backgroundColor: "#F9813A"
-        //   }
-        // }}
+        options={{
+          headerStyle: {
+            backgroundColor: "#F9813A",
+          },
+          title: "Order",
+          headerTitleStyle: {
+            fontSize: 22,
+            fontWeight: 'bold'
+          }
+        }}
         />
         <Stack.Screen name="OnBoard" component={OnBoardScreen}/>
         <Stack.Screen name="Login" component={LoginScreen}/>

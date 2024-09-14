@@ -1,14 +1,16 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import COLORS from '../constants/colors';
 import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 const CartScreen = () => {
-  const CartCard = () => {
+  const CartCard = ({item}) => {
     return(
-      <View style={styles.cartCard}>
-
-      </View>
+      <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}> 
+        <View style={styles.cartCard}>
+          <Image source={item.image} style={{width: 80, height: 80}}/>
+        </View>
+      </TouchableHighlight>
     );
   }
   return (
@@ -21,7 +23,7 @@ const CartScreen = () => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 80}}
       data={foods}
-      renderItems={({item}) => <CartCard item={item}/>}
+      renderItem={({item}) => <CartCard item={item}/>}
       />
     </SafeAreaView>
   );
@@ -43,8 +45,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     paddingHorizontal: 10,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    shadowColor: COLORS.light,
+    shadowOffset: { width: 5, height: 15 },
+    shadowOpacity: 1,
+    shadowRadius: 10,
   }
 });
+
 
 export default CartScreen;

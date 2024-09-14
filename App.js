@@ -13,6 +13,13 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Cart" component={CartScreen} 
+        // options={{
+        //   headerStyle: {
+        //     backgroundColor: "#F9813A"
+        //   }
+        // }}
+        />
         <Stack.Screen name="OnBoard" component={OnBoardScreen}/>
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
@@ -20,7 +27,7 @@ function App() {
           headerShown: false,
           gestureEnabled: false
         }}/>
-        <Stack.Screen name="Cart" component={CartScreen}/>
+        {/* <Stack.Screen name="Cart" component={CartScreen}/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

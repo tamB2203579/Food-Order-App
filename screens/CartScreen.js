@@ -2,18 +2,35 @@ import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlig
 import COLORS from '../constants/colors';
 import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const CartScreen = () => {
   const CartCard = ({item}) => {
     return(
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}> 
         <View style={styles.cartCard}>
+          {/* food image */}
           <Image source={item.image} style={{width: 80, height: 80}}/>
-
+          
+          {/* food detail */}
           <View style={styles.detailsContainer}>
+            {/* title */}
             <Text style={styles.itemName}>{item.name}</Text>
+            {/* rating */}
             <Image source={item.rating} style={styles.ratingImage}/>
+            {/* price */}
             <Text style={styles.itemPrice}>{item.price} VND</Text>
+          </View>
+
+          {/* quantity */}
+          <View style={{marginRight: 20, alignItems: 'center'}}>
+            <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text>
+            {/* button */}
+            <View style={styles.addBtn}>
+              <Ionicons name="remove" size={24} color={COLORS.white} />
+              <Ionicons name="add" size={24} color={COLORS.white} />
+            </View>
+            
           </View>
         </View>
       </TouchableHighlight>
@@ -68,7 +85,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   ratingImage: {
-    width: 60, 
+    width: 65,
     height: 16,
     resizeMode: 'contain',
     alignSelf: 'flex-start', 
@@ -78,6 +95,16 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#555",
   },
+  addBtn: {
+    width: 80,
+    height: 30,
+    backgroundColor: COLORS.primary,
+    borderRadius: 30,
+    paddingHorizontal: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  }
 });
 
 

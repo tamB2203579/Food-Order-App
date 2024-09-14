@@ -5,6 +5,7 @@ import OnBoardScreen from './screens/OnBoardScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import HomeScreen from './screens/HomeScreen';
+import DetailsScreen from './screens/DetailsScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ function App() {
           headerShown: false,
           gestureEnabled: false
         }}/>
+        <Stack.Screen name="Details" component={DetailsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

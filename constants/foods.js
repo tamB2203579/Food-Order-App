@@ -5,6 +5,7 @@ const foods = [
     name: 'Crispy',
     price: '59,000',
     image: require('../assets/popular/crispy.png'),
+    details: 'Our Crispy snack offers a satisfying crunch with every bite. Made from premium ingredients and perfectly seasoned, it’s an ideal option whether you’re enjoying it as a quick snack or sharing it with friends and family. The texture is light and crispy, leaving you craving for more. Pair it with a refreshing drink for the ultimate snack experience.',
   },
   {
     id: '2',
@@ -12,6 +13,7 @@ const foods = [
     name: 'Big Mac Burger',
     price: '76,000',
     image: require('../assets/popular/burger.png'),
+    details: 'The iconic Big Mac Burger is known worldwide for its deliciously juicy beef patties, fresh lettuce, cheese, and signature Big Mac sauce. With two layers of tender, grilled beef and just the right amount of pickles and onions, this burger is sure to satisfy your hunger. Perfect for burger lovers, it offers a mouth-watering blend of flavors that’s hard to resist.',
   },
   {
     id: '3',
@@ -19,13 +21,15 @@ const foods = [
     name: 'Cheese Bacon',
     price: '56,000',
     image: require('../assets/burgers/cheesebacon.png'),
+    details: 'This Cheese Bacon Burger is the perfect combination of savory and indulgent flavors. It features a juicy beef patty topped with melted cheddar cheese, crispy bacon strips, and fresh lettuce. The smoky flavor of the bacon complements the creamy cheese, creating a rich and satisfying bite that’s great for any meal or occasion.',
   },
   {
     id: '4',
     category: 'Burgers',
     name: 'Cheese Burger',
-    price: '39,000',
+    price: '46,000',
     image: require('../assets/burgers/cheeseburger.png'),
+    details: 'Our classic Cheese Burger brings together a tender beef patty, melted cheddar cheese, fresh tomato, crisp lettuce, and a slice of onion all wrapped in a soft sesame bun. Simple yet delicious, this burger is a timeless favorite that delivers on taste and satisfaction with every bite. Ideal for anyone who enjoys the basics done perfectly.',
   },
   {
     id: '5',
@@ -33,6 +37,7 @@ const foods = [
     name: 'Cheese Deluxe',
     price: '89,000',
     image: require('../assets/burgers/cheesedeluxe.png'),
+    details: 'The Cheese Deluxe Burger is all about indulgence. Featuring a thick, juicy beef patty, it comes loaded with extra toppings like fresh lettuce, ripe tomatoes, pickles, and a special sauce that brings the flavors together. The combination of flavors and textures makes this burger a deluxe experience that will leave you full and happy.',
   },
   {
     id: '6',
@@ -40,6 +45,7 @@ const foods = [
     name: 'Double Cheese Burger',
     price: '66,000',
     image: require('../assets/burgers/doublecheeseburger.png'),
+    details: 'Double the patties, double the cheese! The Double Cheese Burger is a must-try for any burger enthusiast. Two beef patties grilled to perfection are paired with slices of cheddar cheese, fresh vegetables, and a special house sauce. Every bite is packed with rich flavors and cheesy goodness, making it a truly satisfying meal.',
   },
   {
     id: '7',
@@ -47,6 +53,7 @@ const foods = [
     name: 'Nuggets',
     price: '49,000',
     image: require('../assets/popular/nuggets.png'),
+    details: 'Our chicken nuggets are crispy on the outside and tender on the inside, offering a burst of flavor with each bite. These golden nuggets are made from high-quality chicken, lightly seasoned and fried to perfection. Whether you dip them in sauce or enjoy them on their own, they make a great snack or side dish.',
   },
   {
     id: '8',
@@ -54,6 +61,7 @@ const foods = [
     name: 'French fries',
     price: '29,000',
     image: require('../assets/snacks_sides/chips.png'),
+    details: 'No meal is complete without a side of our classic French fries. These thin, crispy fries are golden-brown on the outside and soft on the inside, making them a perfect companion to any burger or sandwich. Lightly salted and fried to perfection, they are addictive and great for sharing.',
   },
   {
     id: '9',
@@ -61,6 +69,7 @@ const foods = [
     name: 'Burrito',
     price: '39,000',
     image: require('../assets/snacks_sides/burrito.png'),
+    details: 'Our burrito is a filling and flavorful option that combines savory beef, beans, rice, and fresh vegetables all wrapped in a soft tortilla. The hearty combination of ingredients makes for a well-balanced meal that’s both nutritious and delicious. Add your favorite salsa or hot sauce to take it up a notch.',
   },
   {
     id: '10',
@@ -68,6 +77,7 @@ const foods = [
     name: 'Hot Cakes',
     price: '35,000',
     image: require('../assets/snacks_sides/hotcakes.png'),
+    details: 'Start your day off right with our fluffy and golden Hot Cakes. Served with butter and syrup, these pancakes are light, airy, and sweet—perfect for breakfast or as a midday treat. Each bite melts in your mouth, offering a perfect balance of soft texture and sweet flavor.',
   },
   {
     id: '11',
@@ -75,6 +85,7 @@ const foods = [
     name: 'Coca Cola',
     price: '22,000',
     image: require('../assets/drinks_sweets/coke.png'),
+    details: 'The classic Coca Cola is the perfect refreshing beverage to accompany your meal. With its fizzy bubbles and sweet taste, it’s a universal favorite that quenches your thirst while enhancing the flavor of your food. Enjoy it ice cold for the ultimate refreshment.',
   },
   {
     id: '12',
@@ -82,6 +93,7 @@ const foods = [
     name: 'Fanta',
     price: '22,000',
     image: require('../assets/drinks_sweets/fanta.png'),
+    details: 'Fanta is a bright, bubbly, and refreshing soda bursting with fruit flavor. Whether you choose the orange or a tropical variant, it’s a delicious and fun drink that pairs well with snacks, burgers, or any of our desserts. Fanta adds a splash of excitement to any meal.',
   },
   {
     id: '13',
@@ -89,6 +101,7 @@ const foods = [
     name: 'Sprite',
     price: '22,000',
     image: require('../assets/drinks_sweets/sprite.png'),
+    details: 'Sprite is known for its clean, crisp, and lemon-lime flavor. Its refreshing taste and light, fizzy bubbles make it the perfect drink to cool down on a hot day or to pair with a rich meal. A great choice for those who prefer a non-cola option.',
   },
   {
     id: '14',
@@ -96,6 +109,7 @@ const foods = [
     name: 'Caramel Sundae',
     price: '29,000',
     image: require('../assets/drinks_sweets/sundae1.png'),
+    details: 'Indulge in our Caramel Sundae, made with smooth vanilla ice cream and topped with rich, buttery caramel sauce. Each spoonful offers a creamy, sweet, and satisfying dessert experience. It’s a delightful treat to end your meal or to enjoy on its own.',
   },
   {
     id: '15',
@@ -103,6 +117,7 @@ const foods = [
     name: 'Chocolate Sundae',
     price: '29,000',
     image: require('../assets/drinks_sweets/sundae2.png'),
+    details: 'Our Chocolate Sundae combines creamy vanilla ice cream with luscious chocolate sauce, creating a rich and decadent dessert that chocolate lovers will adore. Each bite offers the perfect balance of cold, creamy, and chocolaty flavors.',
   },
   {
     id: '16',
@@ -110,6 +125,7 @@ const foods = [
     name: 'Strawberry Sundae',
     price: '29,000',
     image: require('../assets/drinks_sweets/sundae3.png'),
+    details: 'Enjoy the sweet and tangy flavor of fresh strawberries paired with our creamy vanilla ice cream in this delightful Strawberry Sundae. Drizzled with a bright and fruity strawberry sauce, it’s a perfect dessert for those who love a bit of freshness with their sweets.',
   },
   {
     id: '17',
@@ -117,6 +133,7 @@ const foods = [
     name: 'Vanilla Icecream',
     price: '10,000',
     image: require('../assets/drinks_sweets/vanillacone.png'),
+    details: 'Our classic Vanilla Ice Cream cone offers a smooth and creamy texture with a sweet, rich vanilla flavor. It’s the perfect treat to cool you down on a warm day or as a simple dessert after a meal. Enjoy it in a crisp waffle cone for added crunch.',
   },
 ];
 

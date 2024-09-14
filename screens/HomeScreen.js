@@ -97,7 +97,13 @@ const HomeScreen = ({ navigation }) => {
           <Text style={{ fontSize: 25, fontWeight: 'bold' }}>Welcome to</Text>
           <Text style={{ fontSize: 38, fontWeight: 'bold', color: COLORS.primary }}>Foody</Text>
         </View>
-        <Icon name="shopping-cart" size={35} />
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Cart')}
+          >
+            <Icon name="shopping-cart" size={35} />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={{ marginTop: 30, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
         <View style={style.searchContainer}>

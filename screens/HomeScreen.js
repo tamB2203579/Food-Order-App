@@ -1,19 +1,47 @@
 import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList, TouchableHighlight, Image } from 'react-native';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import React from 'react';
+import React, { useCallback } from 'react';
 import categories from '../constants/categories';
 import foods from '../constants/foods';
 
 const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
+const ListCategories = React.memo(({categories, selectedCategoryIndex, setSelectedCategoryIndex, filterFoodsByCategory}) => {
+  return (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={style.categoriesListContainer}>
+      {categories.map((category, index) => (
+        <TouchableOpacity
+          key={index}
+          activeOpacity={0.8}
+          onPress={() => {
+            setSelectedCategoryIndex(index);
+            filterFoodsByCategory(category.name);
+          }}>
+          <View style={{
+            backgroundColor: selectedCategoryIndex == index ? COLORS.primary : COLORS.secondary,
+            ...style.categoryBtn,
+          }}>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', color: selectedCategoryIndex == index ? COLORS.white : COLORS.dark }}>
+              {category.name}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
+    );
+});
+
 const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(-1);
   const [filteredFoods, setFilteredFoods] = React.useState(foods);
   const [searchQuery, setSearchQuery] = React.useState('');
 
-  const handleSearch = (text) => {
+  const handleSearch = useCallback((text) => {
     setSearchQuery(text);
     const filteredFoods = foods.filter((food) => {
       const name = food.name.toLowerCase();
@@ -21,9 +49,9 @@ const HomeScreen = ({ navigation }) => {
       return name.includes(query);
     });
     setFilteredFoods(filteredFoods);
-  };
+  }, []);
 
-  const filterFoodsByCategory = (categoryName) => {
+  const filterFoodsByCategory = useCallback((categoryName) => {
     const filteredFoods = foods.filter((food) => {
       if (Array.isArray(food.category)) {
         return food.category.includes(categoryName);
@@ -32,35 +60,7 @@ const HomeScreen = ({ navigation }) => {
       }
     });
     setFilteredFoods(filteredFoods);
-  };
-
-  const ListCategories = () => {
-    return (
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={style.categoriesListContainer}>
-        {categories.map((category, index) => (
-          <TouchableOpacity
-            key={index}
-            activeOpacity={0.8}
-            onPress={() => {
-              setSelectedCategoryIndex(index);
-              filterFoodsByCategory(category.name);
-            }}>
-            <View style={{
-              backgroundColor: selectedCategoryIndex == index ? COLORS.primary : COLORS.secondary,
-              ...style.categoryBtn,
-            }}>
-              <Text style={{ fontSize: 15, fontWeight: 'bold', color: selectedCategoryIndex == index ? COLORS.white : COLORS.dark }}>
-                {category.name}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    );
-  };
+  }, []);
 
   const Card = ({ food }) => {
     return (
@@ -111,7 +111,12 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
       <View>
-        <ListCategories />
+        <ListCategories
+          categories={categories}
+          selectedCategoryIndex={selectedCategoryIndex}
+          setSelectedCategoryIndex={setSelectedCategoryIndex}
+          filterFoodsByCategory={filterFoodsByCategory}
+        />
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}

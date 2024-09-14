@@ -1,4 +1,4 @@
-export const avatars = [
+const avatars = [
     {
       _id: "d97206a2-93bb-434e-9f7a-34d747404150",
       image: {
@@ -216,3 +216,5 @@ export const avatars = [
       title: "Avatar24",
     },
   ];
+
+  export default avatars;

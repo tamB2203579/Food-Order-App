@@ -2,7 +2,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, TouchableW
 import React, { useState } from 'react'
 import UserTextInput from '../components/UserTextInput';
 import { useNavigation } from '@react-navigation/native';
-import { avatars } from '../utils/support';
+import avatars from '../constants/avatars';
 import { MaterialIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { createUserWithEmailAndPassword } from 'firebase/auth';

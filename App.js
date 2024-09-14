@@ -15,7 +15,10 @@ function App() {
         <Stack.Screen name="OnBoard" component={OnBoardScreen}/>
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="SignUp" component={SignUpScreen}/>
-        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="Home" component={HomeScreen} options={{
+          headerShown: false,
+          gestureEnabled: false
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

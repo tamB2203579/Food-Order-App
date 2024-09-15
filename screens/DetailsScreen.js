@@ -38,6 +38,10 @@ const DetailsScreen = ({ navigation, route }) => {
                     <Icon name="favorite-border" color={COLORS.primary} size={25}/>
                   </View>
             </View>
+
+            <View>
+                <Image source={item.rating}/>
+            </View>
             
             {/* detail */}
             <Text style={style.detailsText}>{item.details}</Text>

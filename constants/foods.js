@@ -11,10 +11,10 @@ const foods = [
   {
     id: '2',
     category: ['Popular', 'Burgers'],
-    name: 'Big Mac Burger',
+    name: 'The Classic Burger',
     price: '76,000',
     image: require('../assets/popular/burger.png'),
-    details: 'The iconic Big Mac Burger is known worldwide for its deliciously juicy beef patties, fresh lettuce, cheese, and signature Big Mac sauce. With two layers of tender, grilled beef and just the right amount of pickles and onions, this burger is sure to satisfy your hunger. Perfect for burger lovers, it offers a mouth-watering blend of flavors that’s hard to resist.',
+    details: 'The iconic The Classic Burger is known worldwide for its deliciously juicy beef patties, fresh lettuce, cheese, and signature Big Mac sauce. With two layers of tender, grilled beef and just the right amount of pickles and onions, this burger is sure to satisfy your hunger. Perfect for burger lovers, it offers a mouth-watering blend of flavors that’s hard to resist.',
     rating: require('../assets/rating/rating-50.png'),
   },
   {
@@ -29,10 +29,10 @@ const foods = [
   {
     id: '4',
     category: 'Burgers',
-    name: 'Cheese Burger',
+    name: 'Cheeseburger',
     price: '46,000',
     image: require('../assets/burgers/cheeseburger.png'),
-    details: 'Our classic Cheese Burger brings together a tender beef patty, melted cheddar cheese, fresh tomato, crisp lettuce, and a slice of onion all wrapped in a soft sesame bun. Simple yet delicious, this burger is a timeless favorite that delivers on taste and satisfaction with every bite. Ideal for anyone who enjoys the basics done perfectly.',
+    details: 'Our classic Cheeseburger brings together a tender beef patty, melted cheddar cheese, fresh tomato, crisp lettuce, and a slice of onion all wrapped in a soft sesame bun. Simple yet delicious, this burger is a timeless favorite that delivers on taste and satisfaction with every bite. Ideal for anyone who enjoys the basics done perfectly.',
     rating: require('../assets/rating/rating-20.png'),
   },
   {
@@ -47,10 +47,10 @@ const foods = [
   {
     id: '6',
     category: 'Burgers',
-    name: 'Double Cheese Burger',
+    name: 'Double Cheese',
     price: '66,000',
-    image: require('../assets/burgers/doublecheeseburger.png'),
-    details: 'Double the patties, double the cheese! The Double Cheese Burger is a must-try for any burger enthusiast. Two beef patties grilled to perfection are paired with slices of cheddar cheese, fresh vegetables, and a special house sauce. Every bite is packed with rich flavors and cheesy goodness, making it a truly satisfying meal.',
+    image: require('../assets/burgers/doublecheese.png'),
+    details: 'Double the patties, double the cheese! The Double Cheese is a must-try for any burger enthusiast. Two beef patties grilled to perfection are paired with slices of cheddar cheese, fresh vegetables, and a special house sauce. Every bite is packed with rich flavors and cheesy goodness, making it a truly satisfying meal.',
     rating: require('../assets/rating/rating-30.png'),
   },
   {

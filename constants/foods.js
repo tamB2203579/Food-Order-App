@@ -67,7 +67,7 @@ const foods = [
     category: ['Popular', 'Snacks & Sides'],
     name: 'French fries',
     price: '29,000',
-    image: require('../assets/snacks_sides/chips.png'),
+    image: require('../assets/popular/chips.png'),
     details: 'No meal is complete without a side of our classic French fries. These thin, crispy fries are golden-brown on the outside and soft on the inside, making them a perfect companion to any burger or sandwich. Lightly salted and fried to perfection, they are addictive and great for sharing.',
     rating: require('../assets/rating/rating-40.png'),
   },

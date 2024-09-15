@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, Dimensions, StatusBar } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
 import COLORS from '../constants/colors';
 import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -27,11 +27,17 @@ const CartScreen = ({navigation}) => {
 
           {/* quantity */}
           <View style={{marginRight: 20, alignItems: 'center'}}>
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>3</Text>
+            <Text style={{fontWeight: 'black', fontSize: 18, marginBottom: 3}}>3</Text>
+
             {/* button */}
-            <View style={styles.addBtn}>
-              <Ionicons name="remove" size={24} color={COLORS.white} />
-              <Ionicons name="add" size={24} color={COLORS.white} />
+            <View style={styles.quantityBtn}>
+              <TouchableOpacity style={styles.removeBtn}>
+                <Ionicons name="remove" size={21} color={COLORS.primary} style={{marginRight: 3,}}/>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.addBtn}>
+                <Ionicons name="add" size={21} color={COLORS.white}/>
+              </TouchableOpacity>
             </View>
             
           </View>
@@ -42,32 +48,65 @@ const CartScreen = ({navigation}) => {
   return (
     <SafeAreaView style={{backgroundColor: COLORS.primary, flex: 1}}>
       <View style={styles.header}>
-        <AntDesign name="left" size={28} color="black" 
-        // style={styles.backIcon}
-        onPress={navigation.goBack}/>
-        <Text style={{fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center'}}>Cart</Text>
+        <AntDesign name="left" size={28} color="black"
+          style={styles.backIcon}
+          onPress={navigation.goBack} />
+        
+
+        <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center', flex: 1}}>Cart</Text>
+        
+        <View style={{width: 30}} />
       </View>
+
+
       <FlatList style={{backgroundColor: COLORS.white}}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 80}}
       data={foods}
       renderItem={({item}) => <CartCard item={item}/>}
       
-      ListFooterComponentStyle = {{paddingHorizontal: 20, marginTop: 15}}
+      ListFooterComponentStyle = {{paddingHorizontal: 20, marginTop: 15, borderTopLeftRadius: 30, borderTopRightRadius: 30}}
       // total price
       ListFooterComponent={() => (
         <View>
+
+          {/* substotal */}
           <View style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginVertical: 15,
-          }}>
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>Total Price</Text>
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>100,000 VND</Text>
+            marginTop: 15,
+            marginBottom: 12
+            }}>
+            <Text style={{fontWeight: '485', fontSize: 17}}>Subtotal:</Text>
+            <Text style={{fontWeight: '485', fontSize: 17}}>100,000 VND</Text>
 
           
           </View>
-          <View style={{marginHorizontal: 30}}>
+
+          {/* delivery fee */}
+          <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: 12,
+
+            }}>
+              <Text style={{fontWeight: '485', fontSize: 17}}>Delivery Fee:</Text>
+              <Text style={{fontWeight: '485', fontSize: 17}}>15,000 VND</Text>
+
+            
+          </View>
+
+          {/* Order Total */}
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: 27,
+          }}>
+            <Text style={{fontWeight: 'bold', fontSize: 17}}>Order Total:</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 17}}>115,000 VND</Text>
+          </View>
+
+          <View style={{marginHorizontal: 30, marginBottom: 25}}>
             <PrimaryButton title="Place order"/> 
           </View>
         </View>
@@ -122,15 +161,43 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#555",
   },
-  addBtn: {
-    width: 80,
+  quantityBtn: {
+    width: 90,
     height: 30,
-    backgroundColor: COLORS.primary,
-    borderRadius: 30,
     paddingHorizontal: 5,
     flexDirection: 'row',
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: COLORS.primary,
     justifyContent: 'space-around',
     alignItems: 'center'
+  }, 
+  removeBtn: {
+    backgroundColor: COLORS.white,
+    width: 49,
+    height: 20,
+    paddingHorizontal: 5,
+    flexDirection: 'row',
+    borderTopLeftRadius: 30,
+    borderBottomLeftRadius: 30,
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  addBtn: {
+    backgroundColor: COLORS.primary,
+    width: 49,
+    height: 30,
+    paddingHorizontal: 5,
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderTopRightRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  backIcon: {
+    marginLeft: 10
   }
 });
 

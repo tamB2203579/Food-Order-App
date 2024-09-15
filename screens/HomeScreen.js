@@ -100,11 +100,18 @@ const HomeScreen = ({ navigation }) => {
           <Text style={{ fontSize: 38, fontWeight: 'bold', color: COLORS.primary }}>Foody</Text>
         </View>
         <View>
-          <TouchableOpacity
+        
+        {/* shopping cart icon */}
+        <TouchableOpacity
             onPress={() => navigation.navigate('Cart')}
+            style={style.container}
           >
+            <View style={style.badgeContainer}>
+              <Text style={style.badgeText}>3</Text>
+            </View>
             <Icon name="shopping-cart" size={35} />
-          </TouchableOpacity>
+        </TouchableOpacity>
+
         </View>
       </View>
       <View style={{ marginTop: 30, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -197,5 +204,25 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.primary,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  container: {
+    position: 'relative',
+    padding: 10,
+  },
+  badgeContainer: {
+    position: 'absolute',
+    right: -6,
+    top: -6,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
 });

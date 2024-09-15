@@ -31,13 +31,13 @@ const CartScreen = ({navigation}) => {
 
             {/* button */}
             <View style={styles.quantityBtn}>
-              <TouchableOpacity style={styles.removeBtn}>
-                <Ionicons name="remove" size={21} color={COLORS.primary} style={{marginRight: 3,}}/>
-              </TouchableOpacity>
+                <TouchableOpacity style={styles.removeBtn}>
+                  <Ionicons name="remove" size={21} color={COLORS.primary} style={{marginRight: 3,}}/>
+                </TouchableOpacity>
 
-              <TouchableOpacity style={styles.addBtn}>
-                <Ionicons name="add" size={21} color={COLORS.white}/>
-              </TouchableOpacity>
+                <TouchableOpacity style={styles.addBtn}>
+                  <Ionicons name="add" size={21} color={COLORS.white}/>
+                </TouchableOpacity>
             </View>
             
           </View>

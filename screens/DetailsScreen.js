@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Image, View, Text, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView, Image, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import COLORS from '../constants/colors';
 import { SecondaryButton } from '../components/Button';
@@ -12,8 +12,20 @@ const DetailsScreen = ({ navigation, route }) => {
    
     >
       <View style={style.header}>
-        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
-        <Text style={{fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center'}}>Details</Text>
+        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} style={{marginLeft: 10}}/>
+        <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center', flex: 1}}>Details</Text>
+
+        {/* shopping cart icon */}
+        <TouchableOpacity
+            onPress={() => navigation.navigate('Cart')}
+            style={style.container}
+          >
+            <View style={style.badgeContainer}>
+              <Text style={style.badgeText}>3</Text>
+            </View>
+            <Icon name="shopping-cart" size={35} />
+        </TouchableOpacity>
+
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
       <View
@@ -85,6 +97,27 @@ const style = StyleSheet.create({
     lineHeight: 22,
     fontSize: 16,
     color: COLORS.white,
+  },
+  container: {
+    position: 'relative',
+    padding: 10,
+    marginRight: 10
+  },
+  badgeContainer: {
+    position: 'absolute',
+    right: -6,
+    top: -6,
+    backgroundColor: 'red',
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   
 });

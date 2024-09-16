@@ -13,6 +13,7 @@ const CartScreen = ({navigation}) => {
   const {cartItems} = useContext(CartContext);
 
   const CartCard = ({item}) => {
+    const matchingProduct = cartItems.find((food) => food.id === item.id);
     return(
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}> 
         <View style={styles.cartCard}>
@@ -31,8 +32,8 @@ const CartScreen = ({navigation}) => {
 
           {/* quantity */}
           <View style={{marginRight: 20, alignItems: 'center'}}>
-            <Text style={{fontWeight: 'black', fontSize: 18, marginBottom: 3}}>3</Text>
-
+          {matchingProduct ? <Text style={{ fontWeight: 'black', fontSize: 18, marginBottom: 3 }}>{matchingProduct.quantity}</Text> : null}
+            
             {/* button */}
             <View style={styles.quantityBtn}>
                 <TouchableOpacity style={styles.removeBtn}>
@@ -67,7 +68,15 @@ const CartScreen = ({navigation}) => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 80}}
       data={cartItems}
-      renderItem={({item}) => <CartCard item={item}/>}
+      renderItem={({item}) => {
+        itemID = item.id;
+        let matchingProduct;
+        foods.forEach((food) => {
+          if(food.id === itemID) 
+            matchingProduct = food;
+        })
+        return <CartCard item ={matchingProduct}/>
+      }}
       
       ListFooterComponentStyle = {{paddingHorizontal: 20, marginTop: 15, borderTopLeftRadius: 30, borderTopRightRadius: 30}}
       // total price
@@ -111,7 +120,7 @@ const CartScreen = ({navigation}) => {
           </View>
 
           <View style={{marginHorizontal: 30, marginBottom: 25}}>
-            <PrimaryButton title="Place order"/> 
+            <PrimaryButton title="Place your order"/> 
           </View>
         </View>
       )}

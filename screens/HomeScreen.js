@@ -44,11 +44,19 @@ const HomeScreen = ({ navigation }) => {
   const [quantityCart, setQuantityCart] = useState(0);
 
 
-  const {addToCart} = useContext(CartContext);
+  const {cartItems, addToCart} = useContext(CartContext);
 
   const handleAddToCart = (food) => {
     setQuantityCart((prevQuantity) => prevQuantity + 1);
-    addToCart(food);
+    const matchingItem = cartItems.find((item) => item.id === food.id);
+
+    if(matchingItem) matchingItem.quantity++;
+    else {
+      addToCart({
+        id: food.id,
+        quantity: 1
+      });
+    }
   }
 
   const handleSearch = useCallback((text) => {

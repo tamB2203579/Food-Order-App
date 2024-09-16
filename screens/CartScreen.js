@@ -5,12 +5,13 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { PrimaryButton } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { CartContext } from '../components/CartContext';
 
 
 const CartScreen = ({navigation}) => {
   const {cartItems} = useContext(CartContext);
+
 
   const CartCard = ({item}) => {
     const matchingProduct = cartItems.find((food) => food.id === item.id);

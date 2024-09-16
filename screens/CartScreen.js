@@ -5,9 +5,13 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { PrimaryButton } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
+import { useContext } from 'react';
+import { CartContext } from '../components/CartContext';
 
 
 const CartScreen = ({navigation}) => {
+  const {cartItems} = useContext(CartContext);
+
   const CartCard = ({item}) => {
     return(
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}> 
@@ -62,7 +66,7 @@ const CartScreen = ({navigation}) => {
       <FlatList style={{backgroundColor: COLORS.white}}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 80}}
-      data={foods}
+      data={cartItems}
       renderItem={({item}) => <CartCard item={item}/>}
       
       ListFooterComponentStyle = {{paddingHorizontal: 20, marginTop: 15, borderTopLeftRadius: 30, borderTopRightRadius: 30}}

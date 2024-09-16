@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList, TouchableHighlight, Image } from 'react-native';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import categories from '../constants/categories';
 import foods from '../constants/foods';
+import { CartContext } from '../components/CartContext';
 
 const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
@@ -40,6 +41,15 @@ const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(-1);
   const [filteredFoods, setFilteredFoods] = React.useState(foods);
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [quantityCart, setQuantityCart] = useState(0);
+
+
+  const {addToCart} = useContext(CartContext);
+
+  const handleAddToCart = (food) => {
+    setQuantityCart((prevQuantity) => prevQuantity + 1);
+    addToCart(food);
+  }
 
   const handleSearch = useCallback((text) => {
     setSearchQuery(text);
@@ -70,7 +80,7 @@ const HomeScreen = ({ navigation }) => {
             <Image source={food.image} style={{ height: 120, width: 120 }} />
           </View>
           <View style={{ marginHorizontal: 20 }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{food.name}</Text>
+            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{food.name}</Text>
           </View>
           <View>
             <Image source={food.rating} style={{width: 100, resizeMode: 'contain', alignSelf: 'flex-start', marginLeft: 20}}/>
@@ -83,9 +93,11 @@ const HomeScreen = ({ navigation }) => {
               alignItems: 'center',
             }}>
             <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{food.price} VND</Text>
-            <View style={style.addToCardBtn}>
+            <TouchableOpacity style={style.addToCardBtn}
+              onPress={() => handleAddToCart(food)}
+            >
               <Icon name="add" size={20} color={COLORS.white} />
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </TouchableHighlight>
@@ -107,7 +119,7 @@ const HomeScreen = ({ navigation }) => {
             style={style.container}
           >
             <View style={style.badgeContainer}>
-              <Text style={style.badgeText}>3</Text>
+              <Text style={style.badgeText}>{quantityCart}</Text>
             </View>
             <Icon name="shopping-cart" size={35} />
         </TouchableOpacity>

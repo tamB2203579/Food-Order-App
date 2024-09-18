@@ -10,7 +10,7 @@ import { CartContext } from '../components/CartContext';
 
 
 const CartScreen = ({navigation}) => {
-  const {cartItems} = useContext(CartContext);
+  const {cartItems, handleAdd, handleRemove, subTotal, total, shippingFee} = useContext(CartContext);
 
 
   const CartCard = ({item}) => {
@@ -23,7 +23,7 @@ const CartScreen = ({navigation}) => {
           
           {/* food detail */}
           <View style={styles.detailsContainer}>
-            {/* title */}
+            {/* title */} 
             <Text style={styles.itemName}>{item.name}</Text>
             {/* rating */}
             <Image source={item.rating} style={styles.ratingImage}/>
@@ -37,11 +37,15 @@ const CartScreen = ({navigation}) => {
             
             {/* button */}
             <View style={styles.quantityBtn}>
-                <TouchableOpacity style={styles.removeBtn}>
+                <TouchableOpacity style={styles.removeBtn} 
+                onPress={() => handleRemove(item)}
+                disabled={matchingProduct.quantity === 0}
+                
+                >
                   <Ionicons name="remove" size={21} color={COLORS.primary} style={{marginRight: 3,}}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.addBtn}>
+                <TouchableOpacity style={styles.addBtn} onPress={() => handleAdd(item)}>
                   <Ionicons name="add" size={21} color={COLORS.white}/>
                 </TouchableOpacity>
             </View>
@@ -70,14 +74,15 @@ const CartScreen = ({navigation}) => {
       contentContainerStyle={{paddingBottom: 80}}
       data={cartItems}
       renderItem={({item}) => {
-        itemID = item.id;
-        let matchingProduct;
-        foods.forEach((food) => {
-          if(food.id === itemID) 
-            matchingProduct = food;
-        })
-        return <CartCard item ={matchingProduct}/>
-      }}
+          itemID = item.id;
+          let matchingProduct;
+          foods.forEach((food) => {
+            if(food.id === itemID)  
+              matchingProduct = food;
+          })
+          return <CartCard item ={matchingProduct}/>
+        }
+      }
       
       ListFooterComponentStyle = {{paddingHorizontal: 20, marginTop: 15, borderTopLeftRadius: 30, borderTopRightRadius: 30}}
       // total price
@@ -92,7 +97,7 @@ const CartScreen = ({navigation}) => {
             marginBottom: 12
             }}>
             <Text style={{fontWeight: '485', fontSize: 17}}>Subtotal:</Text>
-            <Text style={{fontWeight: '485', fontSize: 17}}>100,000 VND</Text>
+            <Text style={{fontWeight: '485', fontSize: 17}}>{subTotal},000 VND</Text>
 
           
           </View>
@@ -105,7 +110,7 @@ const CartScreen = ({navigation}) => {
 
             }}>
               <Text style={{fontWeight: '485', fontSize: 17}}>Delivery Fee:</Text>
-              <Text style={{fontWeight: '485', fontSize: 17}}>15,000 VND</Text>
+              <Text style={{fontWeight: '485', fontSize: 17}}>{shippingFee},000 VND</Text>
 
             
           </View>
@@ -117,7 +122,7 @@ const CartScreen = ({navigation}) => {
             marginBottom: 27,
           }}>
             <Text style={{fontWeight: 'bold', fontSize: 17}}>Order Total:</Text>
-            <Text style={{fontWeight: 'bold', fontSize: 17}}>115,000 VND</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 17}}>{total},000 VND</Text>
           </View>
 
           <View style={{marginHorizontal: 30, marginBottom: 25}}>

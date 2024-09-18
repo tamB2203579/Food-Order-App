@@ -8,15 +8,18 @@ export const CartProvider = ({ children }) => {
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [shippingFee, setShippingFee] = useState(15);
+  const [quantityCart, setQuantityCart] = useState(0);
 
   useLayoutEffect(() => {
     let sub = 0;
+
     cartItems.forEach((item) => {
       const matchingProduct = foods.find((food) => food.id === item.id);
       if (matchingProduct) {
         sub += item.quantity * parseInt(matchingProduct.price, 10);
       }
     });
+
     setSubTotal(sub);
     setTotal(sub + shippingFee);
   }, [cartItems, shippingFee]);
@@ -43,7 +46,7 @@ export const CartProvider = ({ children }) => {
 
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, handleAdd, handleRemove, subTotal, total, shippingFee }}>
+    <CartContext.Provider value={{ cartItems, addToCart, handleAdd, handleRemove, subTotal, total, shippingFee, quantityCart, setQuantityCart }}>
       {children}
     </CartContext.Provider>
   );

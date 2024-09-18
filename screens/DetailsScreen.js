@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView, Image, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import COLORS from '../constants/colors';
 import { SecondaryButton } from '../components/Button';
+import { CartContext } from '../components/CartContext';
 
 const DetailsScreen = ({ navigation, route }) => {
   const item = route.params;
+  const {cartItems, addToCart, quantityCart, setQuantityCart} = useContext(CartContext);
+
+  const handleAddToCart = (food) => {
+    setQuantityCart((prevQuantity) => prevQuantity + 1);
+    const matchingItem = cartItems.find((item) => item.id === food.id);
+
+    if(matchingItem) matchingItem.quantity++;
+    else {
+      addToCart({
+        id: food.id,
+        quantity: 1
+      });
+    }
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white,}}
@@ -21,7 +36,7 @@ const DetailsScreen = ({ navigation, route }) => {
             style={style.container}
           >
             <View style={style.badgeContainer}>
-              <Text style={style.badgeText}>3</Text>
+              <Text style={style.badgeText}>{quantityCart}</Text>
             </View>
             <Icon name="shopping-cart" size={35} />
         </TouchableOpacity>
@@ -60,9 +75,8 @@ const DetailsScreen = ({ navigation, route }) => {
             
             {/* button */}
             <View style={{marginTop: 40, marginBottom: 40 }}>
-              <SecondaryButton title="Add To Cart"/>
+              <SecondaryButton title="Add To Cart" onPress={() => handleAddToCart(item)}/>
             </View>
-
           </View>
         </ScrollView>
     </SafeAreaView>

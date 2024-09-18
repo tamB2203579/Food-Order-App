@@ -7,6 +7,7 @@ import { PrimaryButton } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useState } from 'react';
 import { CartContext } from '../components/CartContext';
+import numeral from 'numeral';
 
 
 const CartScreen = ({navigation}) => {
@@ -97,7 +98,7 @@ const CartScreen = ({navigation}) => {
             marginBottom: 12
             }}>
             <Text style={{fontWeight: '485', fontSize: 17}}>Subtotal:</Text>
-            <Text style={{fontWeight: '485', fontSize: 17}}>{subTotal},000 VND</Text>
+            <Text style={{fontWeight: '485', fontSize: 17}}>{numeral(subTotal).format('0,0')},000 VND</Text>
 
           
           </View>
@@ -122,7 +123,7 @@ const CartScreen = ({navigation}) => {
             marginBottom: 27,
           }}>
             <Text style={{fontWeight: 'bold', fontSize: 17}}>Order Total:</Text>
-            <Text style={{fontWeight: 'bold', fontSize: 17}}>{total},000 VND</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 17}}>{numeral(total).format('0,0')},000 VND</Text>
           </View>
 
           <View style={{marginHorizontal: 30, marginBottom: 25}}>

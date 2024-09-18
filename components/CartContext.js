@@ -36,14 +36,28 @@ export const CartProvider = ({ children }) => {
     });
   }
 
+  // const handleRemove = (item) => {
+  //   setCartItems((prevItems) => {
+  //     return prevItems.map((cartItem) => {
+  //       return (cartItem.id === item.id) ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
+  //     })
+  //   });
+  // }
+
   const handleRemove = (item) => {
     setCartItems((prevItems) => {
-      return prevItems.map((cartItem) => {
-        return (cartItem.id === item.id && item.id > 0) ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
-      })
+      const existingItem = prevItems.find((i) => i.id === item.id);
+      if (existingItem) {
+        if (existingItem.quantity === 1) {
+          return prevItems.filter((i) => i.id !== item.id);
+        }
+        return prevItems.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i
+        );
+      }
+      return prevItems;
     });
-  }
-
+  };
 
   return (
     <CartContext.Provider value={{ cartItems, addToCart, handleAdd, handleRemove, subTotal, total, shippingFee, quantityCart, setQuantityCart }}>

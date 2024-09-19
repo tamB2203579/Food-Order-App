@@ -86,7 +86,7 @@ const HomeScreen = ({ navigation }) => {
             <Image source={food.image} style={{ height: 120, width: 120 }} />
           </View>
           <View style={{ marginHorizontal: 20 }}>
-            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{food.name}</Text>
+            <Text style={{ fontSize: 14.7, fontWeight: 'bold' }}>{food.name}</Text>
           </View>
           <View>
             <Image source={food.rating} style={{width: 100, resizeMode: 'contain', alignSelf: 'flex-start', marginLeft: 20}}/>

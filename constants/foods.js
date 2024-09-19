@@ -1,7 +1,7 @@
 const foods = [
   {
     id: '1',
-    category: 'Popular',
+    category: ['Popular', 'Burgers'],
     name: 'Crispy',
     price: '59,000',
     image: require('../assets/popular/crispy.png'),
@@ -146,10 +146,10 @@ const foods = [
   {
     id: '17',
     category: 'Drinks & Sweets',
-    name: 'Vanilla Icecream',
+    name: 'Vanilla Cone',
     price: '10,000',
     image: require('../assets/drinks_sweets/vanillacone.png'),
-    details: 'Our classic Vanilla Ice Cream cone offers a smooth and creamy texture with a sweet, rich vanilla flavor. It’s the perfect treat to cool you down on a warm day or as a simple dessert after a meal. Enjoy it in a crisp waffle cone for added crunch.',
+    details: 'Our classic Vanilla Cone offers a smooth and creamy texture with a sweet, rich vanilla flavor. It’s the perfect treat to cool you down on a warm day or as a simple dessert after a meal. Enjoy it in a crisp waffle cone for added crunch.',
     rating: require('../assets/rating/rating-40.png'),
   },
 ];

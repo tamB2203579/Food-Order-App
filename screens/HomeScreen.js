@@ -41,7 +41,6 @@ const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(-1);
   const [filteredFoods, setFilteredFoods] = React.useState(foods);
   const [searchQuery, setSearchQuery] = React.useState('');
-
   const {cartItems, addToCart, quantityCart, setQuantityCart} = useContext(CartContext);
 
   const handleAddToCart = (food) => {

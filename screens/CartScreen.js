@@ -132,7 +132,10 @@ const CartScreen = ({navigation}) => {
           </View>
 
           <View style={{marginHorizontal: 30, marginBottom: 25}}>
-            <PrimaryButton title="Place your order" onPress={() => navigation.navigate('Delivery')}/> 
+            <PrimaryButton title="Place your order" onPress={() => {
+              if (cartItems.length > 0) navigation.navigate('Delivery');
+              else alert("Your cart is empty");
+            }}/>
           </View>
         </View>
       )}

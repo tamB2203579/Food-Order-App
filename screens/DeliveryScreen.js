@@ -1,10 +1,12 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import * as Icon from 'react-native-feather';
 import COLORS from '../constants/colors';
 
-const DeliveryScreen = () => {
+
+
+const DeliveryScreen = ({navigation}) => {
     const mapRef = useRef(null);
 
     const initialLocation = {
@@ -89,7 +91,3 @@ const DeliveryScreen = () => {
 }
 
 export default DeliveryScreen
-
-const styles = StyleSheet.create({
-
-});

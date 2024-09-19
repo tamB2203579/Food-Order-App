@@ -133,7 +133,7 @@ const CartScreen = ({navigation}) => {
           </View>
 
           <View style={{marginHorizontal: 30, marginBottom: 25}}>
-            <PrimaryButton title="Place your order"/> 
+            <PrimaryButton title="Place your order" onPress={() => navigation.navigate('Delivery')}/> 
           </View>
         </View>
       )}

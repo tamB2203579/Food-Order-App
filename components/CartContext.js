@@ -39,13 +39,6 @@ export const CartProvider = ({ children }) => {
     });
   }
 
-  // const handleRemove = (item) => {
-  //   setCartItems((prevItems) => {
-  //     return prevItems.map((cartItem) => {
-  //       return (cartItem.id === item.id) ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
-  //     })
-  //   });
-  // }
 
   const handleRemove = (item) => {
     setCartItems((prevItems) => {

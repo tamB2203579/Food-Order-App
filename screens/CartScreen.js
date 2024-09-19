@@ -57,7 +57,7 @@ const CartScreen = ({navigation}) => {
     );
   }
   return (
-    <SafeAreaView style={{backgroundColor: COLORS.primary, flex: 1}}>
+    <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
       <View style={styles.header}>
         <AntDesign name="left" size={28} color="black"
           style={styles.backIcon}
@@ -69,6 +69,14 @@ const CartScreen = ({navigation}) => {
         <View style={{width: 30}} />
       </View>
 
+      {/* delivery time */}
+      <View style={{flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, backgroundColor: "rgba(247, 177, 103, 0.6)"}}>
+        <Image source={require("../assets/deliveryman.png")} style={{width: 70, height: 70, marginVertical: 10}}/>
+        <Text style={{paddingLeft: 18, flex: 1, fontSize: 15}}>Delivery in 15-20 minutes</Text>
+        <TouchableOpacity>
+          <Text style={{fontWeight: 'bold', color: COLORS.primary, fontSize: 18}}>Change</Text>
+        </TouchableOpacity>
+      </View>
 
       <FlatList style={{backgroundColor: COLORS.white}}
       showsVerticalScrollIndicator={false}
@@ -140,7 +148,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.white,
     width: '100%'
   },  
   cartCard: {

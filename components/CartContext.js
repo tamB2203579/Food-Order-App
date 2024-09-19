@@ -12,16 +12,19 @@ export const CartProvider = ({ children }) => {
 
   useLayoutEffect(() => {
     let sub = 0;
+    let quan = 0;
 
     cartItems.forEach((item) => {
       const matchingProduct = foods.find((food) => food.id === item.id);
       if (matchingProduct) {
         sub += item.quantity * parseInt(matchingProduct.price, 10);
+        quan+=item.quantity;
       }
     });
 
     setSubTotal(sub);
     setTotal(sub + shippingFee);
+    setQuantityCart(quan);
   }, [cartItems, shippingFee]);
 
   const addToCart = (item) => {

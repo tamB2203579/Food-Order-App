@@ -99,8 +99,6 @@ const CartScreen = ({navigation}) => {
             }}>
             <Text style={{fontWeight: '485', fontSize: 17}}>Subtotal:</Text>
             <Text style={{fontWeight: '485', fontSize: 17}}>{numeral(subTotal).format('0,0')},000 VND</Text>
-
-          
           </View>
 
           {/* delivery fee */}

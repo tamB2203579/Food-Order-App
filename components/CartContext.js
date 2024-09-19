@@ -18,7 +18,7 @@ export const CartProvider = ({ children }) => {
       const matchingProduct = foods.find((food) => food.id === item.id);
       if (matchingProduct) {
         sub += item.quantity * parseInt(matchingProduct.price, 10);
-        quan+=item.quantity;
+        quan += item.quantity;
       }
     });
 
@@ -38,7 +38,6 @@ export const CartProvider = ({ children }) => {
       })
     });
   }
-
 
   const handleRemove = (item) => {
     setCartItems((prevItems) => {

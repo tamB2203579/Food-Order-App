@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, Dimensions, StatusBar, TouchableOpacity, Modal } from 'react-native';
 import COLORS from '../constants/colors';
 import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -12,6 +12,8 @@ import numeral from 'numeral';
 
 const CartScreen = ({navigation}) => {
   const {cartItems, handleAdd, handleRemove, subTotal, total, shippingFee} = useContext(CartContext);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [deliveryType, setDeliveryType] = useState('Delivery Now');
 
   const CartCard = ({item}) => {
     const matchingProduct = cartItems.find((food) => food.id === item.id);
@@ -71,11 +73,36 @@ const CartScreen = ({navigation}) => {
       {/* delivery time */}
       <View style={{flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, backgroundColor: "rgba(247, 177, 103, 0.6)"}}>
         <Image source={require("../assets/deliveryman.png")} style={{width: 70, height: 70, marginVertical: 10}}/>
-        <Text style={{paddingLeft: 18, flex: 1, fontSize: 15}}>Delivery in 15-20 minutes</Text>
-        <TouchableOpacity>
-          <Text style={{fontWeight: 'bold', color: COLORS.primary, fontSize: 18}}>Change</Text>
+        <Text style={{ paddingLeft: 18, flex: 1, fontSize: 15 }}>{deliveryType}</Text>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Text style={{ fontWeight: 'bold', color: COLORS.primary, fontSize: 18 }}>Change</Text>
         </TouchableOpacity>
       </View>
+
+       <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Select Delivery Option</Text>
+            <TouchableOpacity onPress={() => { setDeliveryType('Delivery Now'); setModalVisible(false); }} style={styles.optionButton}>
+              <Text style={styles.optionText}>Delivery Now</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => { setDeliveryType('Schedule Delivery'); setModalVisible(false); }} style={styles.optionButton}>
+              <Text style={styles.optionText}>Schedule Delivery</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
+              <Text style={styles.closeText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
 
       <FlatList style={{backgroundColor: COLORS.white}}
       showsVerticalScrollIndicator={false}
@@ -226,7 +253,45 @@ const styles = StyleSheet.create({
   },
   backIcon: {
     marginLeft: 10
-  }
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: COLORS.white,
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  optionButton: {
+    padding: 15,
+    backgroundColor: COLORS.primary,
+    borderRadius: 5,
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  optionText: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+  },
+  closeButton: {
+    padding: 10,
+    marginTop: 10,
+  },
+  closeText: {
+    color: COLORS.primary,
+    fontWeight: 'bold',
+  },
 });
 
 export default CartScreen;

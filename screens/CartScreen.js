@@ -13,7 +13,6 @@ import numeral from 'numeral';
 const CartScreen = ({navigation}) => {
   const {cartItems, handleAdd, handleRemove, subTotal, total, shippingFee} = useContext(CartContext);
 
-
   const CartCard = ({item}) => {
     const matchingProduct = cartItems.find((food) => food.id === item.id);
     return(
@@ -226,6 +225,5 @@ const styles = StyleSheet.create({
     marginLeft: 10
   }
 });
-
 
 export default CartScreen;

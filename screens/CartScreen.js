@@ -8,12 +8,32 @@ import { useNavigation } from '@react-navigation/native';
 import { useContext, useState } from 'react';
 import { CartContext } from '../components/CartContext';
 import numeral from 'numeral';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 
 const CartScreen = ({navigation}) => {
   const {cartItems, handleAdd, handleRemove, subTotal, total, shippingFee} = useContext(CartContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [deliveryType, setDeliveryType] = useState('Delivery Now');
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [deliveryDate, setDeliveryDate] = useState(new Date());
+
+  const handleDateChange = (event, selectedDate) => {
+    if (event.type === 'set') {
+      const currentDate = selectedDate || deliveryDate;
+      setDeliveryDate(currentDate);
+    }
+  };
+
+  const handleOkPress = () => {
+    setShowDatePicker(false);
+    const formattedDate = deliveryDate.toLocaleString(); // Định dạng ngày tháng
+    setDeliveryType(`Schedule Delivery\n${formattedDate}`); // Cập nhật deliveryType với ngày tháng
+    setModalVisible(false); // Ẩn modal sau khi chọn ngày
+  };
+  
+  
 
   const CartCard = ({item}) => {
     const matchingProduct = cartItems.find((food) => food.id === item.id);
@@ -79,7 +99,7 @@ const CartScreen = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-       <Modal
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -87,21 +107,37 @@ const CartScreen = ({navigation}) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Select Delivery Option</Text>
+          <Text style={styles.modalTitle}>Select Delivery Option</Text>
             <TouchableOpacity onPress={() => { setDeliveryType('Delivery Now'); setModalVisible(false); }} style={styles.optionButton}>
-              <Text style={styles.optionText}>Delivery Now</Text>
+            <Text style={styles.optionText}>Delivery Now</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { setDeliveryType('Schedule Delivery'); setModalVisible(false); }} style={styles.optionButton}>
-              <Text style={styles.optionText}>Schedule Delivery</Text>
+            <TouchableOpacity onPress={() => { setDeliveryType('Schedule Delivery'); setShowDatePicker(true); }} style={styles.optionButton}>
+            <Text style={styles.optionText}>Schedule Delivery</Text>
             </TouchableOpacity>
-            
+
+            {showDatePicker && (
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <DateTimePicker
+                value={deliveryDate}
+                mode="datetime"
+                is24Hour={true}
+                display="default"
+                onChange={handleDateChange}
+                />
+                <TouchableOpacity onPress={handleOkPress} style={styles.okButton}>
+                <FontAwesome5 name="check" size={16} color={COLORS.white} />
+                </TouchableOpacity>
+              </View>
+            )}
+
             <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
-              <Text style={styles.closeText}>Close</Text>
+            <Text style={styles.closeText}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
+
 
 
       <FlatList style={{backgroundColor: COLORS.white}}
@@ -280,9 +316,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
+  okButton: {
+    padding: 10,
+    backgroundColor: COLORS.primary,
+    borderRadius: 5,
+    marginLeft: 5,
+    width: 36,
+    textAlign: 'center'
+  },
   optionText: {
     color: COLORS.white,
     fontWeight: 'bold',
+    fontSize: 15
   },
   closeButton: {
     padding: 10,

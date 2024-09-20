@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList, TouchableHighlight, Image } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList, TouchableHighlight, Image, } from 'react-native';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
@@ -35,7 +35,7 @@ const ListCategories = React.memo(({categories, selectedCategoryIndex, setSelect
         </TouchableOpacity>
       ))}
     </ScrollView>
-    );
+  );
 });
 
 const HomeScreen = ({ navigation }) => {
@@ -138,6 +138,7 @@ const HomeScreen = ({ navigation }) => {
 
         </View>
       </View>
+      
       <View style={{ marginTop: 30, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
         <View style={style.searchContainer}>
           <Icon name="search" size={25} style={{ marginLeft: 20 }} />
@@ -157,6 +158,7 @@ const HomeScreen = ({ navigation }) => {
           filterFoodsByCategory={filterFoodsByCategory}
         />
       </View>
+
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}

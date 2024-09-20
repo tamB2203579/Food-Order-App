@@ -26,6 +26,7 @@ const UserTextInput = ({placeholder, isPass, setStateValue, setGetEmailValidatio
             case "Full name": return setIcon("person");
             case "Email": return setIcon("email");
             case "Password": return setIcon("lock");
+            case "Phone number": return setIcon("phone");
         }
     },[]);
 

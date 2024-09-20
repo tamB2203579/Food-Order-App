@@ -1,31 +1,68 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, TextInput, ActivityIndicator } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import COLORS from '../constants/colors'
 import avatars from '../constants/avatars';
 import { useNavigation } from '@react-navigation/native';
+import { firebaseAuth, firestoreDB } from '../firebase.config';
+import { doc, getDoc } from 'firebase/firestore';
 
 const ProfileScreen = () => {
   const [avatar, setAvatar] = useState(avatars[0].image.asset.url);
-  const [fullName, setFullName] = useState('John Doe');
-  const [address, setAddress] = useState('123 Street, City');
-  const [phoneNumber, setPhoneNumber] = useState('123-456-7890');
+  const [fullName, setFullName] = useState('');
+  const [address, setAddress] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const navgiation = useNavigation();
 
-  const handleEditPress = () => {
-    setIsEditModalVisible(true);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      let docSnap;
+      try {
+        const user = firebaseAuth.currentUser;
+        if (user) {
+          const docRef = doc(firestoreDB, 'users', user.uid);
+          docSnap = await getDoc(docRef);
+        }
 
-  const handleSave = () => {
-    setIsEditModalVisible(false);
-    // Save logic here
-  };
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          setFullName(userData.fullName || '');
+          setAvatar(userData.profilePic || '');
+          setPhoneNumber(userData.phoneNum || '')
 
-  return (
-    <View style={styles.container}>
+        } else {
+          console.log('No such document!');
+        }
+
+      } catch(error){
+        console.log('Error fetching user data:', error);
+      }
+      finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  },[]);
+
+  // const handleEditPress = () => {
+  //   setIsEditModalVisible(true);
+  // };
+
+  // const handleSave = () => {
+  //   setIsEditModalVisible(false);
+  //   // Save logic here
+  // };
+  {isLoading ? (
+    <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+    </View>
+  ) : (
+    <>
+        <View style={styles.container}>
       {/* Background Image */}
       <Image
         source={require("../assets/bg.png")}
@@ -35,7 +72,7 @@ const ProfileScreen = () => {
 
       <View style={styles.profileContainer}>
         {/* Edit Button in top-right */}
-        <TouchableOpacity style={styles.editButton} onPress={handleEditPress}>
+        <TouchableOpacity style={styles.editButton}>
           <MaterialIcons name="edit" size={24} color={COLORS.primary} />
         </TouchableOpacity>
 
@@ -65,7 +102,7 @@ const ProfileScreen = () => {
         </View>
 
         {/* Sign Out Button */}
-        <TouchableOpacity style={styles.signOutButton} onPress={() => navgiation.navigate("Login")}>
+        <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate("Login")}>
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>
       </View>
@@ -75,7 +112,7 @@ const ProfileScreen = () => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Edit Profile</Text>
-
+s
             {/* Full Name Input */}
             <TextInput
               style={styles.input}
@@ -102,7 +139,107 @@ const ProfileScreen = () => {
             />
 
             {/* Save Button */}
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+            <TouchableOpacity style={styles.saveButton}>
+              <Text style={styles.saveButtonText}>Save</Text>
+            </TouchableOpacity>
+
+            {/* Cancel Button */}
+            <TouchableOpacity style={styles.cancelButton} onPress={() => setIsEditModalVisible(false)}>
+              <Text style={styles.cancelButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </View></>
+  )}
+  if (isLoading) {
+    // Hiển thị màn hình chờ
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      {/* Background Image */}
+      <Image
+        source={require("../assets/bg.png")}
+        resizeMode="cover"
+        style={styles.backgroundImage}
+      />
+
+      <View style={styles.profileContainer}>
+        {/* Edit Button in top-right */}
+        <TouchableOpacity style={styles.editButton}>
+          <MaterialIcons name="edit" size={24} color={COLORS.primary} />
+        </TouchableOpacity>
+
+        {/* Avatar */}
+        <TouchableOpacity style={styles.avatarContainer}>
+          <Image source={{ uri: avatar }} style={styles.avatar} resizeMode="contain" />
+        </TouchableOpacity>
+
+        {/* Profile Information */}
+        <Text style={styles.title}>Profile Information</Text>
+
+        <View style={styles.infoContainer}>
+          <View style={styles.fieldContainer}>
+            <Text style={styles.label}>Full Name</Text>
+            <Text style={styles.infoText}>{fullName}</Text>
+          </View>
+
+          <View style={styles.fieldContainer}>
+            <Text style={styles.label}>Address</Text>
+            <Text style={styles.infoText}>{address}</Text>
+          </View>
+
+          <View style={styles.fieldContainer}>
+            <Text style={styles.label}>Phone Number</Text>
+            <Text style={styles.infoText}>{phoneNumber}</Text>
+          </View>
+        </View>
+
+        {/* Sign Out Button */}
+        <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.signOutText}>Sign Out</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Modal for Editing Profile */}
+      <Modal visible={isEditModalVisible} animationType="fade" transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Edit Profile</Text>
+s
+            {/* Full Name Input */}
+            <TextInput
+              style={styles.input}
+              value={fullName}
+              onChangeText={setFullName}
+              placeholder="Full Name"
+            />
+
+            {/* Address Input */}
+            <TextInput
+              style={styles.input}
+              value={address}
+              onChangeText={setAddress}
+              placeholder="Address"
+            />
+
+            {/* Phone Number Input */}
+            <TextInput
+              style={styles.input}
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              placeholder="Phone Number"
+              keyboardType="phone-pad"
+            />
+
+            {/* Save Button */}
+            <TouchableOpacity style={styles.saveButton}>
               <Text style={styles.saveButtonText}>Save</Text>
             </TouchableOpacity>
 

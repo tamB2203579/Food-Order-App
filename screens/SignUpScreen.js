@@ -15,6 +15,7 @@ const SignupScreen = () => {
     const screenHeight = Math.round(Dimensions.get("window").height);
 
     const [name, setName] = useState("");
+    const [phoneNum, setPhoneNum] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [avatar, setAvatar] = useState(avatars[0].image.asset.url);
@@ -35,6 +36,7 @@ const SignupScreen = () => {
                         _id: cred.user.uid,
                         fullName: name,
                         profilePic: avatar,
+                        phoneNum: phoneNum,
                         providerData: cred.user.providerData[0]
                     }
                     const docRef = doc(firestoreDB, 'users', cred.user.uid);
@@ -108,6 +110,13 @@ const SignupScreen = () => {
             placeholder="Full name" 
             isPass={false} 
             setStateValue={setName}
+            />
+
+            {/* phone number */}
+            <UserTextInput 
+            placeholder="Phone number" 
+            isPass={false} 
+            setStateValue={setPhoneNum}
             />
 
 

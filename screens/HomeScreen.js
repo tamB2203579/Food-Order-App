@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList, TouchableHighlight, Image } from 'react-native';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import categories from '../constants/categories';
 import foods from '../constants/foods';
 import { CartContext } from '../components/CartContext';
+import * as Animatable from 'react-native-animatable';
 
 const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
@@ -41,7 +42,11 @@ const HomeScreen = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = React.useState(-1);
   const [filteredFoods, setFilteredFoods] = React.useState(foods);
   const [searchQuery, setSearchQuery] = React.useState('');
-  const {cartItems, addToCart, quantityCart, setQuantityCart} = useContext(CartContext);
+  const {cartItems, addToCart, quantityCart, setQuantityCart, cartIconRef} = useContext(CartContext);
+
+  useEffect(() => {
+    if (cartIconRef.current) cartIconRef.current.swing(800);
+  }, [quantityCart]);
 
   const handleAddToCart = (food) => {
     setQuantityCart((prevQuantity) => prevQuantity + 1);
@@ -119,15 +124,17 @@ const HomeScreen = ({ navigation }) => {
         <View>
         
         {/* shopping cart icon */}
-        <TouchableOpacity
-            onPress={() => navigation.navigate('Cart')}
-            style={style.container}
-          >
-            <View style={style.badgeContainer}>
-              <Text style={style.badgeText}>{quantityCart}</Text>
-            </View>
-            <Icon name="shopping-cart" size={35} />
-        </TouchableOpacity>
+        <Animatable.View ref={cartIconRef}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Cart')}
+              style={style.container}
+            >
+              <View style={style.badgeContainer}>
+                <Text style={style.badgeText}>{quantityCart}</Text>
+              </View>
+              <Icon name="shopping-cart" size={35} />
+            </TouchableOpacity>
+          </Animatable.View>
 
         </View>
       </View>

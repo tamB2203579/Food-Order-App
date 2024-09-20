@@ -1,4 +1,4 @@
-import React, { createContext, useLayoutEffect, useState } from 'react';
+import React, { createContext, useLayoutEffect, useRef, useState } from 'react';
 import foods from '../constants/foods';
 
 export const CartContext = createContext();
@@ -9,6 +9,7 @@ export const CartProvider = ({ children }) => {
   const [total, setTotal] = useState(0);
   const [shippingFee, setShippingFee] = useState(15);
   const [quantityCart, setQuantityCart] = useState(0);
+  const cartIconRef = useRef(null);
 
   useLayoutEffect(() => {
     let sub = 0;
@@ -55,7 +56,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, handleAdd, handleRemove, subTotal, total, shippingFee, quantityCart, setQuantityCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, handleAdd, handleRemove, subTotal, total, shippingFee, quantityCart, setQuantityCart, cartIconRef }}>
       {children}
     </CartContext.Provider>
   );

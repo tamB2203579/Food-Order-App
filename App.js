@@ -17,10 +17,11 @@ function App() {
     <CartProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Home" component={HomeScreen} options={{ gestureEnabled: false }}/>
           <Stack.Screen name="OnBoard" component={OnBoardScreen}/>
           <Stack.Screen name="Login" component={LoginScreen}/>
           <Stack.Screen name="SignUp" component={SignUpScreen}/>
-          <Stack.Screen name="Home" component={HomeScreen} options={{ gestureEnabled: false }}/>
+          {/* <Stack.Screen name="Home" component={HomeScreen} options={{ gestureEnabled: false }}/> */}
           <Stack.Screen name="Details" component={DetailsScreen}/>
           <Stack.Screen name="Cart" component={CartScreen}/>
           <Stack.Screen name="Delivery" component={DeliveryScreen}/>

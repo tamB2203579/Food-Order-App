@@ -4,10 +4,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../constants/colors';
 import { SecondaryButton } from '../components/Button';
 import { CartContext } from '../components/CartContext';
+import * as Animatable from 'react-native-animatable';
 
 const DetailsScreen = ({ navigation, route }) => {
   const item = route.params;
-  const {cartItems, addToCart, quantityCart, setQuantityCart} = useContext(CartContext);
+  const {cartItems, addToCart, quantityCart, setQuantityCart, cartIconRef} = useContext(CartContext);
 
   const handleAddToCart = (food) => {
     setQuantityCart((prevQuantity) => prevQuantity + 1);
@@ -31,15 +32,17 @@ const DetailsScreen = ({ navigation, route }) => {
         <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center', flex: 1}}>Details</Text>
 
         {/* shopping cart icon */}
-        <TouchableOpacity
-            onPress={() => navigation.navigate('Cart')}
-            style={style.container}
-          >
-            <View style={style.badgeContainer}>
-              <Text style={style.badgeText}>{quantityCart}</Text>
-            </View>
-            <Icon name="shopping-cart" size={35} />
-        </TouchableOpacity>
+        <Animatable.View ref={cartIconRef}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Cart')}
+              style={style.container}
+            >
+              <View style={style.badgeContainer}>
+                <Text style={style.badgeText}>{quantityCart}</Text>
+              </View>
+              <Icon name="shopping-cart" size={35} />
+            </TouchableOpacity>
+          </Animatable.View>
 
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>

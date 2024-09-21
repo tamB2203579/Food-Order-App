@@ -45,6 +45,7 @@ const HomeScreen = ({ navigation }) => {
   const {cartItems, addToCart, quantityCart, setQuantityCart, cartIconRef} = useContext(CartContext);
 
   useEffect(() => {
+    console.log('Cart Icon Ref:', cartIconRef.current);
     if (cartIconRef.current) cartIconRef.current.swing(800);
   }, [quantityCart]);
 

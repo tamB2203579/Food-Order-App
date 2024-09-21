@@ -33,6 +33,7 @@ const DeliveryScreen = ({navigation}) => {
 
     return (
         <View style={{ flex: 1 }}>
+            
             <MapView
                 style={{ flex: 1 }}
                 ref={mapRef} 

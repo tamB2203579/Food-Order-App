@@ -13,7 +13,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 
 const CartScreen = ({navigation}) => {
-  const {cartItems, handleAdd, handleRemove, subTotal, total, shippingFee} = useContext(CartContext);
+  const {setCartItems, cartItems, handleAdd, handleRemove, subTotal, total, shippingFee, setQuantityCart} = useContext(CartContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [deliveryType, setDeliveryType] = useState('Delivery Now');
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -196,6 +196,8 @@ const CartScreen = ({navigation}) => {
 
           <View style={{marginHorizontal: 30, marginBottom: 25}}>
             <PrimaryButton title="Place your order" onPress={() => {
+              setCartItems([]);
+              setQuantityCart(0);
               if (cartItems.length > 0) navigation.navigate('Delivery');
               else alert("Your cart is empty");
             }}/>

@@ -24,9 +24,7 @@ const DetailsScreen = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white,}}
-   
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white,}}>
       <View style={style.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} style={{marginLeft: 10}}/>
         <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'center', flex: 1}}>Details</Text>

@@ -11,11 +11,11 @@ const UserTextInput = ({placeholder, isPass, setStateValue, setGetEmailValidatio
 
     const handleTextChanged = (text) => {
         setValue(text);
-        setStateValue(value);
+        setStateValue(text);
 
         if(placeholder === "Email"){
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const status = emailRegex.test(value);
+            const status = emailRegex.test(text);
             setIsEmailValid(status);
             setGetEmailValidationStatus(status);
         }

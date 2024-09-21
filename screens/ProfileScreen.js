@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, TextInput, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, TextInput, ActivityIndicator, Dimensions, ScrollView } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { MaterialIcons } from '@expo/vector-icons';
 import COLORS from '../constants/colors'
 import avatars from '../constants/avatars';
@@ -14,7 +15,10 @@ const ProfileScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [selectedAvatar, setSelectedAvatar] = useState(avatar);
+  // const [selectedAvatar, setSelectedAvatar] = useState(avatar);
+  const [isAvatarMenu, setIsAvatarMenu] = useState(false);
+  const screenWidth = Math.round(Dimensions.get("window").width);
+  const screenHeight = Math.round(Dimensions.get("window").height);
 
   const navigation = useNavigation();
 
@@ -29,7 +33,7 @@ const ProfileScreen = () => {
             const userData = docSnap.data();
             setFullName(userData.fullName || '');
             setAvatar(userData.profilePic || avatars[0].image.asset.url);
-            setSelectedAvatar(userData.profilePic || avatars[0].image.asset.url);
+            // setSelectedAvatar(userData.profilePic || avatars[0].image.asset.url);
             setPhoneNumber(userData.phoneNum || '');
             setAddress(userData.address || '');
           } else {
@@ -58,15 +62,22 @@ const ProfileScreen = () => {
           fullName: fullName,
           address: address,
           phoneNum: phoneNumber,
-          profilePic: selectedAvatar,
+          // profilePic: selectedAvatar,
+          profilePic: avatar,
         });
       }
-      setAvatar(selectedAvatar);
+      // setAvatar(selectedAvatar);
+      setAvatar(avatar);
       setIsEditModalVisible(false);
     } catch (error) {
       alert('Error saving profile');
     }
   };
+
+  const handleAvatar = (item) => {
+    setAvatar(item.image.asset.url);
+    setIsAvatarMenu(false);
+  }
 
   if (isLoading) {
     return (
@@ -92,9 +103,11 @@ const ProfileScreen = () => {
         </TouchableOpacity>
 
         {/* Avatar */}
-        <TouchableOpacity style={styles.avatarContainer}>
-          <Image source={{ uri: avatar }} style={styles.avatar} resizeMode="contain" />
-        </TouchableOpacity>
+        <View style={styles.avatarContainer}>
+          <TouchableOpacity style={styles.avatarWrapper}>
+            <Image source={{ uri: avatar }} style={styles.avatar} resizeMode="contain" />
+          </TouchableOpacity>
+        </View>
 
         {/* Profile Information */}
         <Text style={styles.title}>Profile Information</Text>
@@ -131,13 +144,46 @@ const ProfileScreen = () => {
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Edit Profile</Text>
 
+            {isAvatarMenu && (
+              <>
+                  {/* list of avatars selection */}
+                  <View className="absolute inset-0 z-10" style={{width: screenWidth, height: screenHeight}}>
+                      <ScrollView>
+                          <BlurView 
+                              // className="w-full h-full px-4 py-16 flex-row flex-wrap items-center justify-evenly" 
+                              className="w-full h-full px-4 flex-row flex-wrap items-center justify-evenly" 
+                              tint="light" 
+                              intensity={40}
+                              style={{width: screenWidth, height: screenHeight}}>
+
+                              {avatars?.map((item) => {
+                                  return(                            
+                                  <TouchableOpacity onPress={() => handleAvatar(item)}
+                                  key={item._id} 
+                                  className="w-20 m-3 h-20 p-1 rounded-full border-2 border-primary relative">
+                                      <Image source={{uri: item.image.asset.url}} 
+                                      className="w-full h-full"
+                                      resizeMode="contain"/>
+                                  </TouchableOpacity>);
+                              })}
+                          </BlurView>
+                      </ScrollView>
+                  </View>
+              </>
+            )}
+
             {/* Avatar Selection */}
-            <TouchableOpacity>
-              <Image source={{ uri: selectedAvatar }} style={styles.avatarSelection} resizeMode="contain" />
-              <View style={styles.editIconConainter}>
-                <MaterialIcons name="edit" size={18} color="#fff" />
-              </View>
-            </TouchableOpacity>
+            <View style={styles.avatarContainer}>
+              <TouchableOpacity
+              onPress={() => setIsAvatarMenu(true)}
+              style={styles.avatarWrapper}
+              >
+                <Image source={{ uri: avatar }} style={styles.avatar} resizeMode="contain" />
+                <View style={styles.iconAvatar}>
+                  <MaterialIcons name="edit" size={18} color="#fff" />
+                </View>
+              </TouchableOpacity>
+            </View>
 
             {/* Full Name Input */}
             <View style={styles.inputContainer}>
@@ -218,17 +264,37 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   avatarContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    overflow: 'hidden',
-    borderWidth: 2,
-    borderColor: '#f48c06',
+    width: '100%', 
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
     marginBottom: 20,
   },
   avatar: {
     width: '100%',
     height: '100%',
+  },
+  avatarWrapper: {
+    width: 100,
+    height: 100, 
+    margin: 6,
+    padding: 4, 
+    borderRadius: 50, 
+    borderWidth: 2,
+    borderColor: '#f48c06',
+    position: 'relative',
+  },
+  iconAvatar: {
+    width: 24, 
+    height: 24, 
+    backgroundColor: COLORS.primary, 
+    borderRadius: 12, 
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,

@@ -39,6 +39,7 @@ const SignupScreen = () => {
                         phoneNum: phoneNum,
                         providerData: cred.user.providerData[0]
                     }
+
                     const docRef = doc(firestoreDB, 'users', cred.user.uid);
                     setDoc(docRef, data).then(() => {
                         navigation.navigate("Login");
@@ -91,10 +92,10 @@ const SignupScreen = () => {
         resizeMode="contain"
         /> */}
 
-        <Text className="text-primaryText text-xl font-semibold">Join with us!</Text>
+        <Text className="text-primaryText text-xl font-semibold -mb-4">Join with us!</Text>
 
         {/* avatar section */}
-        <View className="w-full flex items-center justify-center relative -my-4">
+        <View className="w-full flex items-center justify-center relative -mb-4">
             <TouchableOpacity onPress={() => setIsAvatarMenu(true)}
             className="w-20 m-1.5 h-20 p-1 rounded-full border-2 relative" style={{borderColor: "#f48c06"}}>
                 <Image source={{uri: avatar}} className="w-full h-full" resizeMode="contain"/>

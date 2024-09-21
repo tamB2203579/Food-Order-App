@@ -79,7 +79,8 @@ const ProfileScreen = () => {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={COLORS.primary} />
+        <Image source={require("../assets/logo.png")} style={{width: 96, height: 96}}/>
+        <ActivityIndicator size="large" color={COLORS.primary} style={{marginTop: 20}}/>
       </View>
     );
   }
@@ -407,6 +408,11 @@ const styles = StyleSheet.create({
     borderColor: '#f48c06',
     marginBottom: 20,
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 export default ProfileScreen;

@@ -5,7 +5,7 @@ import COLORS from '../constants/colors'
 import avatars from '../constants/avatars';
 import { useNavigation } from '@react-navigation/native';
 import { firebaseAuth, firestoreDB } from '../firebase.config';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const ProfileScreen = () => {
   const [avatar, setAvatar] = useState(avatars[0].image.asset.url);
@@ -13,147 +13,62 @@ const ProfileScreen = () => {
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState(avatar);
 
-  const navgiation = useNavigation();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
-      let docSnap;
       try {
         const user = firebaseAuth.currentUser;
         if (user) {
           const docRef = doc(firestoreDB, 'users', user.uid);
-          docSnap = await getDoc(docRef);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const userData = docSnap.data();
+            setFullName(userData.fullName || '');
+            setAvatar(userData.profilePic || avatars[0].image.asset.url);
+            setSelectedAvatar(userData.profilePic || avatars[0].image.asset.url);
+            setPhoneNumber(userData.phoneNum || '');
+            setAddress(userData.address || '');
+          } else {
+            console.log('No such document!');
+          }
         }
-
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          setFullName(userData.fullName || '');
-          setAvatar(userData.profilePic || '');
-          setPhoneNumber(userData.phoneNum || '')
-
-        } else {
-          console.log('No such document!');
-        }
-
-      } catch(error){
+      } catch (error) {
         console.log('Error fetching user data:', error);
-      }
-      finally {
+      } finally {
         setIsLoading(false);
       }
-    }
+    };
     fetchData();
-  },[]);
+  }, []);
 
-  // const handleEditPress = () => {
-  //   setIsEditModalVisible(true);
-  // };
+  const handleEditPress = () => {
+    setIsEditModalVisible(true);
+  };
 
-  // const handleSave = () => {
-  //   setIsEditModalVisible(false);
-  //   // Save logic here
-  // };
-  {isLoading ? (
-    <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={COLORS.primary} />
-    </View>
-  ) : (
-    <>
-        <View style={styles.container}>
-      {/* Background Image */}
-      <Image
-        source={require("../assets/bg.png")}
-        resizeMode="cover"
-        style={styles.backgroundImage}
-      />
+  const handleSave = async () => {
+    try {
+      const user = firebaseAuth.currentUser;
+      if (user) {
+        const docRef = doc(firestoreDB, 'users', user.uid);
+        await updateDoc(docRef, {
+          fullName: fullName,
+          address: address,
+          phoneNum: phoneNumber,
+          profilePic: selectedAvatar,
+        });
+      }
+      setAvatar(selectedAvatar);
+      setIsEditModalVisible(false);
+    } catch (error) {
+      alert('Error saving profile');
+    }
+  };
 
-      <View style={styles.profileContainer}>
-        {/* Edit Button in top-right */}
-        <TouchableOpacity style={styles.editButton}>
-          <MaterialIcons name="edit" size={24} color={COLORS.primary} />
-        </TouchableOpacity>
-
-        {/* Avatar */}
-        <TouchableOpacity style={styles.avatarContainer}>
-          <Image source={{ uri: avatar }} style={styles.avatar} resizeMode="contain" />
-        </TouchableOpacity>
-
-        {/* Profile Information */}
-        <Text style={styles.title}>Profile Information</Text>
-
-        <View style={styles.infoContainer}>
-          <View style={styles.fieldContainer}>
-            <Text style={styles.label}>Full Name</Text>
-            <Text style={styles.infoText}>{fullName}</Text>
-          </View>
-
-          <View style={styles.fieldContainer}>
-            <Text style={styles.label}>Address</Text>
-            <Text style={styles.infoText}>{address}</Text>
-          </View>
-
-          <View style={styles.fieldContainer}>
-            <Text style={styles.label}>Phone Number</Text>
-            <Text style={styles.infoText}>{phoneNumber}</Text>
-          </View>
-        </View>
-
-        {/* Sign Out Button */}
-        <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.signOutText}>Sign Out</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Modal for Editing Profile */}
-      <Modal visible={isEditModalVisible} animationType="fade" transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Edit Profile</Text>
-s
-            {/* Full Name Input */}
-            <TextInput
-              style={styles.input}
-              value={fullName}
-              onChangeText={setFullName}
-              placeholder="Full Name"
-            />
-
-            {/* Address Input */}
-            <TextInput
-              style={styles.input}
-              value={address}
-              onChangeText={setAddress}
-              placeholder="Address"
-            />
-
-            {/* Phone Number Input */}
-            <TextInput
-              style={styles.input}
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-              placeholder="Phone Number"
-              keyboardType="phone-pad"
-            />
-
-            {/* Save Button */}
-            <TouchableOpacity style={styles.saveButton}>
-              <Text style={styles.saveButtonText}>Save</Text>
-            </TouchableOpacity>
-
-            {/* Cancel Button */}
-            <TouchableOpacity style={styles.cancelButton} onPress={() => setIsEditModalVisible(false)}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    </View></>
-  )}
   if (isLoading) {
-    // Hiển thị màn hình chờ
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={COLORS.primary} />
@@ -172,8 +87,8 @@ s
 
       <View style={styles.profileContainer}>
         {/* Edit Button in top-right */}
-        <TouchableOpacity style={styles.editButton}>
-          <MaterialIcons name="edit" size={24} color={COLORS.primary} />
+        <TouchableOpacity style={styles.editButton} onPress={handleEditPress}>
+          <MaterialIcons name="edit" size={36} color={COLORS.primary} />
         </TouchableOpacity>
 
         {/* Avatar */}
@@ -202,7 +117,10 @@ s
         </View>
 
         {/* Sign Out Button */}
-        <TouchableOpacity style={styles.signOutButton} onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity
+          style={styles.signOutButton}
+          onPress={() => navigation.navigate('Login')}
+        >
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>
       </View>
@@ -212,39 +130,59 @@ s
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Edit Profile</Text>
-s
+
+            {/* Avatar Selection */}
+            <TouchableOpacity>
+              <Image source={{ uri: selectedAvatar }} style={styles.avatarSelection} resizeMode="contain" />
+              <View style={styles.editIconConainter}>
+                <MaterialIcons name="edit" size={18} color="#fff" />
+              </View>
+            </TouchableOpacity>
+
             {/* Full Name Input */}
-            <TextInput
-              style={styles.input}
-              value={fullName}
-              onChangeText={setFullName}
-              placeholder="Full Name"
-            />
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Full Name</Text>
+              <TextInput
+                style={styles.input}
+                value={fullName}
+                onChangeText={setFullName}
+                placeholder="Full Name"
+              />
+            </View>
 
             {/* Address Input */}
-            <TextInput
-              style={styles.input}
-              value={address}
-              onChangeText={setAddress}
-              placeholder="Address"
-            />
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Address</Text>
+              <TextInput
+                style={styles.input}
+                value={address}
+                onChangeText={setAddress}
+                placeholder="Address"
+              />
+            </View>
 
             {/* Phone Number Input */}
-            <TextInput
-              style={styles.input}
-              value={phoneNumber}
-              onChangeText={setPhoneNumber}
-              placeholder="Phone Number"
-              keyboardType="phone-pad"
-            />
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Phone Number</Text>
+              <TextInput
+                style={styles.input}
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+                placeholder="Phone Number"
+                keyboardType="phone-pad"
+              />
+            </View>
 
             {/* Save Button */}
-            <TouchableOpacity style={styles.saveButton}>
+            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
               <Text style={styles.saveButtonText}>Save</Text>
             </TouchableOpacity>
 
             {/* Cancel Button */}
-            <TouchableOpacity style={styles.cancelButton} onPress={() => setIsEditModalVisible(false)}>
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={() => setIsEditModalVisible(false)}
+            >
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
@@ -310,8 +248,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   label: {
+    textAlign: 'left',
     fontWeight: 'bold',
     color: '#333',
+    marginBottom: 10,
   },
   infoText: {
     flex: 1,
@@ -338,6 +278,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '90%',
+    height: "75%",
     backgroundColor: COLORS.white,
     borderRadius: 20,
     padding: 20,
@@ -348,13 +289,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
+  inputContainer: {
+    width: '100%',
+    marginBottom: 20,
+  },
   input: {
+    margin: 0,
     width: '100%',
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
     padding: 10,
-    marginBottom: 15,
   },
   saveButton: {
     backgroundColor: COLORS.primary,
@@ -378,6 +323,26 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: 'black',
     fontWeight: 'bold',
+  },
+  editIconConainter: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: COLORS.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarSelection: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: '#f48c06',
+    marginBottom: 20,
   },
 });
 

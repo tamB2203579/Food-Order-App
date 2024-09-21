@@ -15,7 +15,6 @@ const ProfileScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  // const [selectedAvatar, setSelectedAvatar] = useState(avatar);
   const [isAvatarMenu, setIsAvatarMenu] = useState(false);
   const screenWidth = Math.round(Dimensions.get("window").width);
   const screenHeight = Math.round(Dimensions.get("window").height);
@@ -33,7 +32,6 @@ const ProfileScreen = () => {
             const userData = docSnap.data();
             setFullName(userData.fullName || '');
             setAvatar(userData.profilePic || avatars[0].image.asset.url);
-            // setSelectedAvatar(userData.profilePic || avatars[0].image.asset.url);
             setPhoneNumber(userData.phoneNum || '');
             setAddress(userData.address || '');
           } else {
@@ -62,11 +60,10 @@ const ProfileScreen = () => {
           fullName: fullName,
           address: address,
           phoneNum: phoneNumber,
-          // profilePic: selectedAvatar,
           profilePic: avatar,
         });
       }
-      // setAvatar(selectedAvatar);
+
       setAvatar(avatar);
       setIsEditModalVisible(false);
     } catch (error) {

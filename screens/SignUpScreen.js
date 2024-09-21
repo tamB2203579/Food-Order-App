@@ -126,7 +126,7 @@ const SignupScreen = () => {
                             setGetEmailValidationStatus={setGetEmailValidationStatus}
                         />
 
-                        {!getPasswordValidationStatus && password.length > 0 && (
+            {!getPasswordValidationStatus && password.length > 0 && (
                             <Text className="text-base text-red-600">Password must be at least 7 characters long</Text>
                         )}
 

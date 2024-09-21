@@ -144,7 +144,7 @@ const SignupScreen = () => {
                             <Text className="py-2 text-white text-xl font-semibold">Sign Up</Text>
                         </TouchableOpacity>
 
-                        <View className="py-3 flex-row items-center justìy-center space-x-2 ">
+                        <View className="py-1 flex-row items-center justìy-center space-x-2 ">
                             <Text className="text-base text-primaryText">Have an account!</Text>
                             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                                 <Text className="text-base text-primaryBold" style={{ fontWeight: "bold" }}>Login here</Text>

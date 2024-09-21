@@ -132,7 +132,7 @@ const SignupScreen = () => {
             />
 
             {!getPasswordValidationStatus && password.length > 0 && (
-                            <Text className="text-base text-red-600">Password must be at least 7 characters long</Text>
+                            <Text className="text-base text-red-600">Password must be at least 6 characters long</Text>
                         )}
 
             {/* password */}

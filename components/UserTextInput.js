@@ -10,6 +10,15 @@ const UserTextInput = ({placeholder, isPass, setStateValue, setGetEmailValidatio
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isPasswordlValid, setIsPasswordValid] = useState(false);
 
+    const getBorderColor = (placeholder, value, isEmailValid, isPasswordValid) => {
+        if (placeholder === "Email" && value.length > 0 && !isEmailValid) return "border-red-500";
+
+        if (placeholder === "Password" && value.length > 0 && !isPasswordValid) return "border-red-500";
+
+        return "border-gray-200"; 
+    };
+  
+
     const handleTextChanged = (text) => {
         setValue(text);
         setStateValue(text);
@@ -22,12 +31,9 @@ const UserTextInput = ({placeholder, isPass, setStateValue, setGetEmailValidatio
         }
 
         if(placeholder === "Password"){
-            if (text.length > 6) {
+            if (text.length >= 6) {
                 setIsPasswordValid(true);
                 setGetPasswordValidationStatus(true);
-            } else {
-                setIsPasswordValid(false);
-                setGetPasswordValidationStatus(false);
             }
         }
     }
@@ -42,8 +48,10 @@ const UserTextInput = ({placeholder, isPass, setStateValue, setGetEmailValidatio
     },[]);
 
     return (
-    <View className={`border rounded-2xl px-4 py-6 flex-row items-center justify-between space-x-4 my-2 ${!isEmailValid && placeholder === "Email" && value.length > 0 ? "border-red-500" : "border-gray-200"}
-    ${!isPasswordlValid && placeholder === "Password" && value.length > 0 ? "border-red-500" : "border-gray-200"}`}>
+        <View
+        className={`border rounded-2xl px-4 py-6 flex-row items-center justify-between space-x-4 my-2
+          ${getBorderColor(placeholder, value, isEmailValid, isPasswordlValid)}`}>
+
         <MaterialIcons name={icon} size={24} color="#6c6d83"/>
         <TextInput className="flex-1 text-base text-primaryText font-semibold -mt-1"
         placeholder={placeholder}

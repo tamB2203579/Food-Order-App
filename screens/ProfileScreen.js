@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, TextInput, ActivityIndicator, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Modal, TextInput, ActivityIndicator, Dimensions, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { MaterialIcons } from '@expo/vector-icons';
 import COLORS from '../constants/colors'
@@ -143,98 +143,100 @@ const ProfileScreen = () => {
 
       {/* Modal for Editing Profile */}
       <Modal visible={isEditModalVisible} animationType="fade" transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Edit Profile</Text>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Edit Profile</Text>
 
-            {isAvatarMenu && (
-              <>
-                  {/* list of avatars selection */}
-                  <View className="absolute inset-0 z-10" style={{width: screenWidth, height: screenHeight}}>
-                      <ScrollView>
-                          <BlurView 
-                              // className="w-full h-full px-4 py-16 flex-row flex-wrap items-center justify-evenly" 
-                              className="w-full h-full px-4 flex-row flex-wrap items-center justify-evenly" 
-                              tint="light" 
-                              intensity={40}
-                              style={{width: screenWidth, height: screenHeight}}>
+              {isAvatarMenu && (
+                <>
+                    {/* list of avatars selection */}
+                    <View className="absolute inset-0 z-10" style={{width: screenWidth, height: screenHeight}}>
+                        <ScrollView>
+                            <BlurView 
+                                // className="w-full h-full px-4 py-16 flex-row flex-wrap items-center justify-evenly" 
+                                className="w-full h-full px-4 flex-row flex-wrap items-center justify-evenly" 
+                                tint="light" 
+                                intensity={40}
+                                style={{width: screenWidth, height: screenHeight}}>
 
-                              {avatars?.map((item) => {
-                                  return(                            
-                                  <TouchableOpacity onPress={() => handleAvatar(item)}
-                                  key={item._id} 
-                                  className="w-20 m-3 h-20 p-1 rounded-full border-2 border-primary relative">
-                                      <Image source={{uri: item.image.asset.url}} 
-                                      className="w-full h-full"
-                                      resizeMode="contain"/>
-                                  </TouchableOpacity>);
-                              })}
-                          </BlurView>
-                      </ScrollView>
+                                {avatars?.map((item) => {
+                                    return(                            
+                                    <TouchableOpacity onPress={() => handleAvatar(item)}
+                                    key={item._id} 
+                                    className="w-20 m-3 h-20 p-1 rounded-full border-2 border-primary relative">
+                                        <Image source={{uri: item.image.asset.url}} 
+                                        className="w-full h-full"
+                                        resizeMode="contain"/>
+                                    </TouchableOpacity>);
+                                })}
+                            </BlurView>
+                        </ScrollView>
+                    </View>
+                </>
+              )}
+
+              {/* Avatar Selection */}
+              <View style={styles.avatarContainer}>
+                <TouchableOpacity
+                onPress={() => setIsAvatarMenu(true)}
+                style={styles.avatarWrapper}
+                >
+                  <Image source={{ uri: avatar }} style={styles.avatar} resizeMode="contain" />
+                  <View style={styles.iconAvatar}>
+                    <MaterialIcons name="edit" size={18} color="#fff" />
                   </View>
-              </>
-            )}
+                </TouchableOpacity>
+              </View>
 
-            {/* Avatar Selection */}
-            <View style={styles.avatarContainer}>
+              {/* Full Name Input */}
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Full Name</Text>
+                <TextInput
+                  style={styles.input}
+                  value={fullName}
+                  onChangeText={setFullName}
+                  placeholder="Full Name"
+                />
+              </View>
+
+              {/* Address Input */}
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Address</Text>
+                <TextInput
+                  style={styles.input}
+                  value={address}
+                  onChangeText={setAddress}
+                  placeholder="Address"
+                />
+              </View>
+
+              {/* Phone Number Input */}
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Phone Number</Text>
+                <TextInput
+                  style={styles.input}
+                  value={phoneNumber}
+                  onChangeText={setPhoneNumber}
+                  placeholder="Phone Number"
+                />
+              </View>
+
+              {/* Save Button */}
+              <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                <Text style={styles.saveButtonText}>Save</Text>
+              </TouchableOpacity>
+
+              {/* Cancel Button */}
               <TouchableOpacity
-              onPress={() => setIsAvatarMenu(true)}
-              style={styles.avatarWrapper}
+                style={styles.cancelButton}
+                onPress={() => setIsEditModalVisible(false)}
               >
-                <Image source={{ uri: avatar }} style={styles.avatar} resizeMode="contain" />
-                <View style={styles.iconAvatar}>
-                  <MaterialIcons name="edit" size={18} color="#fff" />
-                </View>
+                <Text style={styles.cancelButtonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
-
-            {/* Full Name Input */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Full Name</Text>
-              <TextInput
-                style={styles.input}
-                value={fullName}
-                onChangeText={setFullName}
-                placeholder="Full Name"
-              />
-            </View>
-
-            {/* Address Input */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Address</Text>
-              <TextInput
-                style={styles.input}
-                value={address}
-                onChangeText={setAddress}
-                placeholder="Address"
-              />
-            </View>
-
-            {/* Phone Number Input */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Phone Number</Text>
-              <TextInput
-                style={styles.input}
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
-                placeholder="Phone Number"
-              />
-            </View>
-
-            {/* Save Button */}
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.saveButtonText}>Save</Text>
-            </TouchableOpacity>
-
-            {/* Cancel Button */}
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={() => setIsEditModalVisible(false)}
-            >
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </TouchableOpacity>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );

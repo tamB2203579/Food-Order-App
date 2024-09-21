@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList, TouchableHighlight, Image, } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TextInput, Dimensions, ScrollView, TouchableOpacity, FlatList, TouchableHighlight, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import COLORS from '../constants/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
@@ -116,6 +116,7 @@ const HomeScreen = ({ navigation }) => {
   }
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SafeAreaView style={{ flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.white }}>
       <View style={style.header}>
         <View>
@@ -167,6 +168,7 @@ const HomeScreen = ({ navigation }) => {
         renderItem={({ item }) => <Card food={item} />}
       />
     </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 

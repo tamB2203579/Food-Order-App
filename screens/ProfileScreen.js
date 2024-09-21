@@ -7,6 +7,7 @@ import avatars from '../constants/avatars';
 import { useNavigation } from '@react-navigation/native';
 import { firebaseAuth, firestoreDB } from '../firebase.config';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
 
 const ProfileScreen = () => {
   const [avatar, setAvatar] = useState(avatars[0].image.asset.url);
@@ -130,7 +131,11 @@ const ProfileScreen = () => {
         {/* Sign Out Button */}
         <TouchableOpacity
           style={styles.signOutButton}
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => {
+            signOut(firebaseAuth).then(() => {
+              console.log("The user signed out");
+            });
+            navigation.navigate('Login')}}
         >
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>

@@ -17,6 +17,7 @@ const ProfileScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isAvatarMenu, setIsAvatarMenu] = useState(false);
+  const [email, setEmail] = useState("");
   const screenWidth = Math.round(Dimensions.get("window").width);
   const screenHeight = Math.round(Dimensions.get("window").height);
 
@@ -31,10 +32,12 @@ const ProfileScreen = () => {
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             const userData = docSnap.data();
+            console.log(userData);
             setFullName(userData.fullName || '');
             setAvatar(userData.profilePic || avatars[0].image.asset.url);
             setPhoneNumber(userData.phoneNum || '');
             setAddress(userData.address || '');
+            setEmail(userData.providerData.email || '');
           } else {
             console.log('No such document!');
           }
@@ -110,6 +113,7 @@ const ProfileScreen = () => {
 
         {/* Profile Information */}
         <Text style={styles.title}>Profile Information</Text>
+        <Text style={styles.email}>{email}</Text>
 
         <View style={styles.infoContainer}>
           <View style={styles.fieldContainer}>
@@ -308,7 +312,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 5,
   },
   infoContainer: {
     width: "90%",
@@ -423,6 +427,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  email: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: COLORS.grey,
+    marginBottom: 20,
   }
 });
 

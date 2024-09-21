@@ -21,6 +21,8 @@ const SignupScreen = () => {
     const [avatar, setAvatar] = useState(avatars[0].image.asset.url);
     const [isAvatarMenu, setIsAvatarMenu] = useState(false);
     const [getEmailValidationStatus, setGetEmailValidationStatus] = useState(false);
+    const [getPasswordValidationStatus, setGetPasswordValidationStatus] = useState(false);
+
 
     const navigation = useNavigation();
     const handleAvatar = (item) => {
@@ -108,14 +110,14 @@ const SignupScreen = () => {
         <View className="w-full flex items-center justify-center">
             {/* full name */}
             <UserTextInput 
-            placeholder="Full name" 
+            placeholder="Full Name" 
             isPass={false} 
             setStateValue={setName}
             />
 
             {/* phone number */}
             <UserTextInput 
-            placeholder="Phone number" 
+            placeholder="Phone Number" 
             isPass={false} 
             setStateValue={setPhoneNum}
             />
@@ -129,12 +131,16 @@ const SignupScreen = () => {
             setGetEmailValidationStatus={setGetEmailValidationStatus}
             />
 
+            {!getPasswordValidationStatus && password.length > 0 && (
+                            <Text className="text-base text-red-600">Password must be at least 7 characters long</Text>
+                        )}
 
             {/* password */}
             <UserTextInput 
-            placeholder="Password" 
+            placeholder="Password"
             isPass={true} 
             setStateValue={setPassword}
+            setGetPasswordValidationStatus={setGetPasswordValidationStatus}
             />
 
 

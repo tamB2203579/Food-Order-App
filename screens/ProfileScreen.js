@@ -251,11 +251,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  loadingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   backgroundImage: {
     width: '100%',
     height: 200,
@@ -316,7 +311,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     width: "90%",
-    marginBottom: 20,
+    marginBottom: 12,
   },
   fieldContainer: {
     flexDirection: 'row',

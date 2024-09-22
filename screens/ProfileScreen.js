@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '90%',
-    height: "75%",
+    height: '63%',
     backgroundColor: COLORS.white,
     borderRadius: 20,
     padding: 20,
@@ -361,7 +361,8 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 15,
+    marginTop: 5,
   },
   inputContainer: {
     width: '100%',

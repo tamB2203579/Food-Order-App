@@ -38,7 +38,7 @@ const HomeTabNavigator = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="home" size={24} color={color} />
+            <Icon name="home" size={24} color={color}/>
           ),
           tabBarLabel: () => null,
         }}

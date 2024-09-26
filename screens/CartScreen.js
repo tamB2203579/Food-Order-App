@@ -4,7 +4,6 @@ import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { PrimaryButton } from '../components/Button';
-import { useNavigation } from '@react-navigation/native';
 import { useContext, useState } from 'react';
 import { CartContext } from '../components/CartContext';
 import numeral from 'numeral';

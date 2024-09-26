@@ -4,12 +4,13 @@ import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { PrimaryButton } from '../components/Button';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { CartContext } from '../components/CartContext';
 import numeral from 'numeral';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-
+import { firebaseAuth, firestoreDB } from '../firebase.config';
+import { doc, getDoc } from 'firebase/firestore';
 
 const CartScreen = ({navigation}) => {
   const {setCartItems, cartItems, handleAdd, handleRemove, subTotal, total, shippingFee, setQuantityCart} = useContext(CartContext);
@@ -17,6 +18,70 @@ const CartScreen = ({navigation}) => {
   const [deliveryType, setDeliveryType] = useState('Delivery Now');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState(new Date());
+  const [userData, setUserData] = useState({});
+
+  //Fetch user information from Firestore
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const user = firebaseAuth.currentUser;
+        if (user) {
+          const docRef = doc(firestoreDB, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const userData = docSnap.data();
+            console.log(userData);
+            setUserData({
+              fullName: userData.fullName || '',
+              email: userData.providerData.email || '',
+              phoneNumber: userData.phoneNum || ''
+            });
+          } else {
+            console.log('No such document!');
+          }
+        }
+      } catch (error) {
+        console.log('Error fetching user data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handlePlaceOrder = async () => {
+    if (cartItems.length > 0) {
+      const orderDetails = {
+        user: userData,
+        total: total
+      };
+      
+      try {
+        await pushOrderToMySQL(orderDetails);
+        alert("Order placed successfully!");
+        setCartItems([]);
+        setQuantityCart(0);
+        navigation.navigate('Delivery');
+      } catch (error) {
+        console.error('Error placing order:', error);
+        alert("Failed to place order. Please try again.");
+      }
+    } else {
+      alert("Your cart is empty");
+    }
+  };
+
+  const pushOrderToMySQL = async (orderDetails) => {
+    const response = await fetch('http://192.168.2.97:3000/items', { //place the IPV4 address
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderDetails),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to place order');
+    }
+  };
 
   const handleDateChange = (event, selectedDate) => {
     if (event.type === 'set') {
@@ -31,8 +96,6 @@ const CartScreen = ({navigation}) => {
     setDeliveryType(`Schedule Delivery\n${formattedDate}`); // Cập nhật deliveryType với ngày tháng
     setModalVisible(false); // Ẩn modal sau khi chọn ngày
   };
-  
-  
 
   const CartCard = ({item}) => {
     const matchingProduct = cartItems.find((food) => food.id === item.id);
@@ -194,12 +257,7 @@ const CartScreen = ({navigation}) => {
           </View>
 
           <View style={{marginHorizontal: 30, marginBottom: 25}}>
-            <PrimaryButton title="Place your order" onPress={() => {
-              setCartItems([]);
-              setQuantityCart(0);
-              if (cartItems.length > 0) navigation.navigate('Delivery');
-              else alert("Your cart is empty");
-            }}/>
+            <PrimaryButton title="Place your order" onPress={handlePlaceOrder}/>
           </View>
         </View>
       )}

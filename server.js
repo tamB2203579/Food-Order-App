@@ -1,9 +1,11 @@
 const express = require('express');
 const mysql = require('mysql2');
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Create a connection to the MySQL database
 const db = mysql.createConnection({
@@ -31,6 +33,19 @@ app.get('/items', (req, res) => {
       return res.status(500).json({ error: 'Database query failed' });
     }
     res.json(results);
+  });
+});
+
+app.post('/items', (req, res) => {
+  const { user, total } = req.body;
+  const sql = 'INSERT INTO Order_Details (orderPeron, orderEmail, orderPN, totalPrice) VALUES (?, ?, ?, ?)';
+  const values = [user.fullName, user.email, user.phoneNumber, total];
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Error inserting order:', err);
+      return res.status(500).json({ error: 'Failed to create order' });
+    }
+    res.status(201).json({ message: 'Order created successfully', orderID: result.insertId });
   });
 });
 

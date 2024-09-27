@@ -24,9 +24,8 @@ db.connect((err) => {
   console.log('Connected to MySQL database');
 });
 
-// Example route to fetch data
-app.get('/items', (req, res) => {
-  const sql = 'SELECT * FROM order_details';
+app.get('/orders', (req, res) => {
+  const sql = 'select * from order_details';
   db.query(sql, (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
@@ -36,10 +35,10 @@ app.get('/items', (req, res) => {
   });
 });
 
-app.post('/items', (req, res) => {
+app.post('/orders', (req, res) => {
   const { user, total } = req.body;
-  const sql = 'INSERT INTO Order_Details (orderPeron, orderEmail, orderPN, totalPrice) VALUES (?, ?, ?, ?)';
-  const values = [user.fullName, user.email, user.phoneNumber, total];
+  const sql = 'insert into order_details (orderEmail, orderPN, totalPrice) values (?, ?, ?)';
+  const values = [user.email, user.phoneNumber, total];
   db.query(sql, values, (err, result) => {
     if (err) {
       console.error('Error inserting order:', err);

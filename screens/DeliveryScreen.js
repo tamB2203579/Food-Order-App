@@ -1,6 +1,6 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React, { useEffect, useRef } from 'react';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import * as Icon from 'react-native-feather';
 import COLORS from '../constants/colors';
 

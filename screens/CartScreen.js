@@ -69,7 +69,7 @@ const CartScreen = ({navigation}) => {
   };
 
   const pushOrderToMySQL = async (orderDetails) => {
-    const response = await fetch('http://192.168.2.97:3000/orders', { //place the IPV4 address
+    const response = await fetch('http://localhost:3000/orders', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

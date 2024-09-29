@@ -1,12 +1,10 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import * as Icon from 'react-native-feather';
 import COLORS from '../constants/colors';
 
-
-
-const DeliveryScreen = ({navigation}) => {
+const DeliveryScreen = ({ navigation }) => {
     const mapRef = useRef(null);
 
     const initialLocation = {
@@ -25,7 +23,7 @@ const DeliveryScreen = ({navigation}) => {
         if (mapRef.current) {
             mapRef.current.animateToRegion({
                 ...markerLocation,
-                latitudeDelta: 0.003, 
+                latitudeDelta: 0.003,
                 longitudeDelta: 0.003,
             }, 1000);
         }
@@ -33,10 +31,10 @@ const DeliveryScreen = ({navigation}) => {
 
     return (
         <View style={{ flex: 1 }}>
-            
+
             <MapView
                 style={{ flex: 1 }}
-                ref={mapRef} 
+                ref={mapRef}
                 initialRegion={initialLocation}
                 mapType='standard'
             >
@@ -61,14 +59,14 @@ const DeliveryScreen = ({navigation}) => {
                         <Text className="mt-2 text-gray-700 font-semibold">Your order is own its way!</Text>
                     </View>
 
-                    <Image className="w-24 h-24" source={require("../assets/deliveryman.png")}/>
+                    <Image className="w-24 h-24" source={require("../assets/deliveryman.png")} />
                 </View>
 
-                <View style={{backgroundColor: "rgba(249, 129, 58, 0.8)"}}
+                <View style={{ backgroundColor: "rgba(249, 129, 58, 0.8)" }}
                     className="p-2 flex-row justify-between items-center rounded-full my-5 mx-2">
 
-                    <View className="p-1 rounded-full" style={{backgroundColor: "rbga(255,255,255,0.4)"}}>
-                        <Image className="w-16 h-16 rounded-full" source={require("../assets/deliveryman-avatar.png")}/>
+                    <View className="p-1 rounded-full" style={{ backgroundColor: "rbga(255,255,255,0.4)" }}>
+                        <Image className="w-16 h-16 rounded-full" source={require("../assets/deliveryman-avatar.png")} />
                     </View>
 
                     <View className="flex-1 ml-3">
@@ -78,11 +76,11 @@ const DeliveryScreen = ({navigation}) => {
 
                     <View className="flex-row items-center space-x-3 mr-3">
                         <TouchableOpacity className="bg-white p-2 rounded-full">
-                            <Icon.Phone fill={COLORS.primary} stroke={COLORS.primary} strokeWidth={1}/>
+                            <Icon.Phone fill={COLORS.primary} stroke={COLORS.primary} strokeWidth={1} />
                         </TouchableOpacity>
 
                         <TouchableOpacity className="bg-white p-2 rounded-full">
-                            <Icon.X fill={COLORS.primary} stroke="red" strokeWidth={3}/>
+                            <Icon.X fill={COLORS.primary} stroke="red" strokeWidth={3} />
                         </TouchableOpacity>
                     </View>
                 </View>

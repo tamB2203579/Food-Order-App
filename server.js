@@ -22,29 +22,29 @@ db.connect((err) => {
   console.log('Connected to MySQL database');
 });
 
-  app.get('/orders', (req, res) => {
-    const sql = 'select * from order_details';
-    db.query(sql, (err, results) => {
-      if (err) {
-        console.error('Error executing query:', err);
-        return res.status(500).json({ error: 'Database query failed' });
-      }
-      res.json(results);
-    });
+app.get('/orders', (req, res) => {
+  const sql = 'select * from order_details';
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      return res.status(500).json({ error: 'Database query failed' });
+    }
+    res.json(results);
   });
+});
 
-  app.post('/orders', (req, res) => {
-    const { user, total } = req.body;
-    const sql = 'insert into order_details (orderEmail, orderPN, totalPrice) values (?, ?, ?)';
-    const values = [user.email, user.phoneNumber, total];
-    db.query(sql, values, (err, result) => {
-      if (err) {
-        console.error('Error inserting order:', err);
-        return res.status(500).json({ error: 'Failed to create order' });
-      }
-      res.status(201).json({ message: 'Order created successfully', orderID: result.insertId });
-    });
+app.post('/orders', (req, res) => {
+  const { user, total } = req.body;
+  const sql = 'insert into order_details (orderEmail, orderPN, totalPrice) values (?, ?, ?)';
+  const values = [user.email, user.phoneNumber, total];
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Error inserting order:', err);
+      return res.status(500).json({ error: 'Failed to create order' });
+    }
+    res.status(201).json({ message: 'Order created successfully', orderID: result.insertId });
   });
+});
 
 // Start the server
 app.listen(3000, () => {

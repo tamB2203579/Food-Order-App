@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, Dimensions, StatusBar, TouchableOpacity, Modal } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Modal } from 'react-native';
 import COLORS from '../constants/colors';
 import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -69,7 +69,7 @@ const CartScreen = ({navigation}) => {
   };
 
   const pushOrderToMySQL = async (orderDetails) => {
-    const response = await fetch('http://192.168.2.97:3000/orders', { //place the IPV4 address
+    const response = await fetch('http://localhost:3000/orders', { //place the IPV4 address
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

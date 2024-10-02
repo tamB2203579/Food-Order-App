@@ -25,7 +25,6 @@ const HomeTabNavigator = () => {
           width: width * 0.4,
           left: width / 2 - (width * 0.4) / 2,
           alignSelf: 'center',
-          ...styles.shadow,
           borderColor: COLORS.primary,
           borderWidth: 2,
           borderTopColor: COLORS.primary,
@@ -38,7 +37,7 @@ const HomeTabNavigator = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="home" size={24} color={color}/>
+            <Icon name="home" size={24} color={color} style={[styles.icon, { left: '35%' }]}/>
           ),
           tabBarLabel: () => null,
         }}
@@ -48,7 +47,7 @@ const HomeTabNavigator = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="person" size={24} color={color} />
+            <Icon name="person" size={24} color={color} style={[styles.icon, { right: '35%' }]} />
           ),
           tabBarLabel: () => null,
         }}
@@ -58,15 +57,9 @@ const HomeTabNavigator = () => {
 };
 
 const styles = {
-  shadow: {
-    shadowColor: COLORS.light,
-    shadowOpacity: 10,
-    shadowRadius: 20,
-    elevation: 5,
-    shadowOffset: {
-      width: 0,
-      height: 15,
-    }
+  icon: {
+    position: 'absolute',
+    top: '50%', 
   },
 };
 

@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Modal } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Modal, TextInput } from 'react-native';
 import COLORS from '../constants/colors';
 import foods from '../constants/foods';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -19,6 +19,7 @@ const CartScreen = ({navigation}) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [deliveryDate, setDeliveryDate] = useState(new Date());
   const [userData, setUserData] = useState({});
+  const [deliveryAddress, setDeliveryAddress]= useState('');
 
   //Fetch user information from Firestore
   useEffect(() => {
@@ -47,24 +48,29 @@ const CartScreen = ({navigation}) => {
   }, []);
 
   const handlePlaceOrder = async () => {
-    if (cartItems.length > 0) {
-      const orderDetails = {
-        user: userData,
-        total: total
-      };
-      
-      try {
-        await pushOrderToMySQL(orderDetails);
-        alert("Order placed successfully!");
-        setCartItems([]);
-        setQuantityCart(0);
-        navigation.navigate('Delivery');
-      } catch (error) {
-        console.error('Error placing order:', error);
-        alert("Failed to place order. Please try again.");
+    if(deliveryAddress.trim()){
+      if (cartItems.length > 0) {
+        const orderDetails = {
+          user: userData,
+          total: total
+        };
+        
+        try {
+          await pushOrderToMySQL(orderDetails);
+          alert("Order placed successfully!");
+          setCartItems([]);
+          setQuantityCart(0);
+          setDeliveryAddress('');
+          navigation.navigate('Delivery');
+        } catch (error) {
+          console.error('Error placing order:', error);
+          alert("Failed to place order. Please try again.");
+        }
+      } else {
+        alert("Your cart is empty");
       }
     } else {
-      alert("Your cart is empty");
+      alert("Enter delivery address");
     }
   };
 
@@ -91,9 +97,9 @@ const CartScreen = ({navigation}) => {
 
   const handleOkPress = () => {
     setShowDatePicker(false);
-    const formattedDate = deliveryDate.toLocaleString(); // Định dạng ngày tháng
-    setDeliveryType(`Schedule Delivery\n${formattedDate}`); // Cập nhật deliveryType với ngày tháng
-    setModalVisible(false); // Ẩn modal sau khi chọn ngày
+    const formattedDate = deliveryDate.toLocaleString(); 
+    setDeliveryType(`Schedule Delivery\n${formattedDate}`); 
+    setModalVisible(false); 
   };
 
   const CartCard = ({item}) => {
@@ -159,6 +165,16 @@ const CartScreen = ({navigation}) => {
           <Text style={{ fontWeight: 'bold', color: COLORS.primary, fontSize: 18 }}>Change</Text>
         </TouchableOpacity>
       </View>
+      
+      {/* delivery address */}
+      <View style={{ padding: 16 }}>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter delivery address"
+          value={deliveryAddress}
+          onChangeText={setDeliveryAddress}
+        />
+      </View>
 
       <Modal
         animationType="fade"
@@ -170,7 +186,7 @@ const CartScreen = ({navigation}) => {
           <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Select Delivery Option</Text>
             <TouchableOpacity onPress={() => { setDeliveryType('Delivery Now'); setModalVisible(false); }} style={styles.optionButton}>
-            <Text style={styles.optionText}>Delivery Now</Text>
+              <Text style={styles.optionText}>Delivery Now</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => { setDeliveryType('Schedule Delivery'); setShowDatePicker(true); }} style={styles.optionButton}>
@@ -394,6 +410,14 @@ const styles = StyleSheet.create({
   closeText: {
     color: COLORS.primary,
     fontWeight: 'bold',
+  },
+  input: {
+    height: 40,
+    borderColor: COLORS.grey,
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 15,
   },
 });
 

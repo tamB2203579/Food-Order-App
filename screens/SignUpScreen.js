@@ -18,10 +18,12 @@ const SignupScreen = () => {
     const [phoneNum, setPhoneNum] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [repassword, setRePassword] = useState("");
     const [avatar, setAvatar] = useState(avatars[0].image.asset.url);
     const [isAvatarMenu, setIsAvatarMenu] = useState(false);
     const [getEmailValidationStatus, setGetEmailValidationStatus] = useState(false);
     const [getPasswordValidationStatus, setGetPasswordValidationStatus] = useState(false);
+    const [getRePasswordValidationStatus, setGetRePasswordValidationStatus] = useState(false);
 
 
     const navigation = useNavigation();
@@ -31,7 +33,11 @@ const SignupScreen = () => {
     }
 
     const handleSignUp = () => {
-        if (getEmailValidationStatus && email.length !== "") {
+        const passwordsMatch = password === repassword;
+
+        if (getEmailValidationStatus && email.length !== "" 
+            && getPasswordValidationStatus 
+            && passwordsMatch) {
             createUserWithEmailAndPassword(firebaseAuth, email, password)
                 .then((cred) => {
                     const data = {
@@ -47,6 +53,10 @@ const SignupScreen = () => {
                         navigation.navigate("Login");
                     });
                 })
+        } else {
+            if (!passwordsMatch) {
+                alert("Password doesn't match");
+            }
         }
     }
 
@@ -121,6 +131,14 @@ const SignupScreen = () => {
                             isPass={true}
                             setStateValue={setPassword}
                             setGetPasswordValidationStatus={setGetPasswordValidationStatus}
+                        />
+
+                        {/* password2 */}
+                        <UserTextInput
+                            placeholder="Re-enter Password"
+                            isPass={true}
+                            setStateValue={setRePassword}
+                            setGetRePasswordValidationStatus={setGetRePasswordValidationStatus}
                         />
 
 

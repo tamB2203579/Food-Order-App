@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CartProvider } from './components/CartContext';
 import OnBoardScreen from './screens/OnBoardScreen';
 import LoginScreen from './screens/LoginScreen';
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import HomeTabNavigator from './screens/HomeTabNavigator';
 import DetailsScreen from './screens/DetailsScreen';
@@ -19,6 +20,7 @@ function App() {
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="OnBoard" component={OnBoardScreen}/>
           <Stack.Screen name="Login" component={LoginScreen} options={{ gestureEnabled: false }}/>
+          <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen}/>
           <Stack.Screen name="SignUp" component={SignUpScreen}/>
           <Stack.Screen name="HomeTab" component={HomeTabNavigator} options={{ gestureEnabled: false }}/>
           <Stack.Screen name="Details" component={DetailsScreen}/>

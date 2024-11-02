@@ -86,6 +86,12 @@ const LoginScreen = () => {
                 <Text className="text-base text-primaryBold" style={{ fontWeight: "bold" }}>Create here</Text>
               </TouchableOpacity>
             </View>
+
+            <View className=" flex-row items-center justìy-center space-x-2 -mt-3">
+              <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+                <Text className="text-base text-primaryBold" style={{ fontWeight: "bold" }}>Forgot your password?</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>

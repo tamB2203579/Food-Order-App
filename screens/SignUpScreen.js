@@ -103,21 +103,6 @@ const SignupScreen = () => {
                     </View>
 
                     <View className="w-full flex items-center justify-center">
-                        {/* full name */}
-                        <UserTextInput
-                            placeholder="Full Name"
-                            isPass={false}
-                            setStateValue={setName}
-                        />
-
-                        {/* phone number */}
-                        <UserTextInput
-                            placeholder="Phone Number"
-                            isPass={false}
-                            setStateValue={setPhoneNum}
-                        />
-
-
                         {/* email */}
                         <UserTextInput
                             placeholder="Email"

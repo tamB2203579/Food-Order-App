@@ -25,7 +25,7 @@ const LoginScreen = () => {
           getDoc(docRef).then(docSnap => {
             if (docSnap.exists()) {
               // console.log("User data: ", docSnap.data());
-              navigation.navigate('HomeTab')
+              navigation.navigate('Information')
             }
           })
         })

@@ -10,6 +10,7 @@ import HomeTabNavigator from './screens/HomeTabNavigator';
 import DetailsScreen from './screens/DetailsScreen';
 import CartScreen from './screens/CartScreen';
 import DeliveryScreen from './screens/DeliveryScreen';
+import InformationScreen from './screens/InformationScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ function App() {
           <Stack.Screen name="Login" component={LoginScreen} options={{ gestureEnabled: false }}/>
           <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen}/>
           <Stack.Screen name="SignUp" component={SignUpScreen}/>
+          <Stack.Screen name="Information" component={InformationScreen}/>
           <Stack.Screen name="HomeTab" component={HomeTabNavigator} options={{ gestureEnabled: false }}/>
           <Stack.Screen name="Details" component={DetailsScreen}/>
           <Stack.Screen name="Cart" component={CartScreen}/>

@@ -25,24 +25,15 @@ const ForgotPasswordScreen = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View className="flex-1 justify-start items-center">
-        <Image
-          source={require("../assets/bg.png")}
-          resizeMode="cover"
-          className="h-96"
-          style={{ width: screenWidth }} />
-
-
-        {/* Main View */}
-        <View className="w-full h-full bg-white rounded-tl-[90px] -mt-44 flex items-center justify-start py-6 px-6 space-y-6">
+        <View className="bg-white items-center justify-center flex-1 p-6">
           <Image
             source={require("../assets/password.png")}
-            className="h-16 w-16"
+            className="h-20 w-20 mb-5"
             resizeMode="contain"
           />
 
-          <Text className="text-primaryText text-xl font-semibold" style={{ marginBottom: -18 }}>Forgot your password?</Text>
-          <Text className="text-gray-500 text-sm mb-2">Enter your email so that we can send password link</Text>
+          <Text className="text-primaryText text-3xl font-semibold mb-2">Forgot your password?</Text>
+          <Text className="text-gray-500 text-md mb-6">Enter your email so that we can send password link</Text>
 
 
           <View className="w-full flex items-center justify-center">
@@ -56,16 +47,15 @@ const ForgotPasswordScreen = ({navigation}) => {
             />
 
             {/* Send Request */}
-            <TouchableOpacity onPress={handleForgotPassword} className="w-full px-4 py-2 rounded-xl my-3 flex items-center justify-center bg-primary mt-10">
+            <TouchableOpacity onPress={handleForgotPassword} className="w-full px-4 py-2 rounded-xl my-3 flex items-center justify-center bg-primary mt-6">
               <Text className="py-2 text-white text-xl font-semibold">Send Request</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('Login')} className="w-full px-4 py-2 rounded-xl my-3 flex items-center justify-center bg-white border border-primary">
+            <TouchableOpacity onPress={() => navigation.navigate('Login')} className="w-full px-4 py-2 rounded-xl my-2 flex items-center justify-center bg-white border border-primary">
               <Text className="py-2 text-primary text-xl font-semibold">Back to Login</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </View>
     </TouchableWithoutFeedback >
   )
 }

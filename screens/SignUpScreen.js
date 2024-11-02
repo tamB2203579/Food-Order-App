@@ -97,9 +97,9 @@ const SignupScreen = () => {
                 )}
 
                 {/* Main View */}
-                <View className="w-full h-full bg-white rounded-tl-[90px] -mt-20 flex items-center justify-start py-6 px-6 space-y-6">
+                <View className="w-full h-full bg-white rounded-tl-[90px] -mt-20 flex items-center justify-start py-8 px-6 space-y-6">
 
-                    <Text className="text-primaryText text-xl font-semibold -mb-4">Join with us!</Text>
+                    <Text className="text-primaryText text-2xl font-semibold -mb-2">Join with us!</Text>
 
                     {/* avatar section */}
                     <View className="w-full flex items-center justify-center relative -mb-4">

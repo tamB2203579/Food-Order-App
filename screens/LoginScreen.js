@@ -51,11 +51,11 @@ const LoginScreen = () => {
         <View className="w-full h-full bg-white rounded-tl-[90px] -mt-44 flex items-center justify-start py-6 px-6 space-y-6">
           <Image
             source={require("../assets/logo.png")}
-            className="h-16 w-16"
+            className="h-16 w-16 -mb-2"
             resizeMode="contain"
           />
 
-          <Text className="text-primaryText text-xl font-semibold">Welcome back!</Text>
+          <Text className="text-primaryText text-2xl font-semibold">Welcome back!</Text>
 
           <View className="w-full flex items-center justify-center">
 

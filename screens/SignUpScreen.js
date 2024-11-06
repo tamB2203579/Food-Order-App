@@ -50,7 +50,7 @@ const SignupScreen = () => {
 
                     const docRef = doc(firestoreDB, 'users', cred.user.uid);
                     setDoc(docRef, data).then(() => {
-                        navigation.navigate("Login");
+                        navigation.navigate("Information");
                     });
                 })
         } else {

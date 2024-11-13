@@ -17,6 +17,7 @@
     "dotenv": "^16.4.5",
     "expo": "~51.0.28",
     "expo-blur": "^13.0.2",
+    "expo-location": "~17.0.1",
     "expo-status-bar": "~1.12.1",
     "express": "^4.21.0",
     "firebase": "^10.13.1",

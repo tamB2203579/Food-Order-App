@@ -1,28 +1,71 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import React, { useEffect, useRef } from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import React, { useEffect, useRef, useState } from 'react';
+import MapView, { Marker, Polyline, Circle } from 'react-native-maps';
 import * as Icon from 'react-native-feather';
 import COLORS from '../constants/colors';
+import * as Location from 'expo-location';
 
 const DeliveryScreen = ({ navigation }) => {
+    const [location, setLocation] = useState();
     const mapRef = useRef(null);
 
+    // const initialLocation = {
+    //     latitude: 10.029200,
+    //     longitude: 105.768852,
+    //     latitudeDelta: 0.01,
+    //     longitudeDelta: 0.01,
+    // };
+
+    // const markerLocation = {
+    //     latitude: 10.031,
+    //     longitude: 105.762,
+    // };
+
+    // const initialLocation = {
+    //     latitude: location.latitude,
+    //     longitude: location.longitude,
+    //     latitudeDelta: 0.01,
+    //     longitudeDelta: 0.01,
+    // };
+
+    // const markerLocation = {
+    //     latitude: location.latitude,
+    //     longitude: location.longitude,
+    // };
+
     const initialLocation = {
-        latitude: 10.029200,
-        longitude: 105.768852,
+        latitude: 10.031289,
+        longitude: 105.769156,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
     };
 
-    const markerLocation = {
+    const current = {
         latitude: 10.031,
-        longitude: 105.762,
+        longitude: 105.7691,
     };
+    
+    const markerLocation = {
+        latitude: 10.027034,
+        longitude: 105.770529,
+    };
+    
 
     useEffect(() => {
+        const getPermissions = async () => {
+            let {status} = await Location.requestForegroundPermissionsAsync();
+            if(status !== 'granted'){
+                console.log("Please grant location permission");
+                return;
+            }
+            let currentLocation = await Location.getCurrentPositionAsync({});
+            setLocation(currentLocation);
+            console.log("Location:", currentLocation);
+        }
+        getPermissions();
         if (mapRef.current) {
             mapRef.current.animateToRegion({
-                ...markerLocation,
+                ...current,
                 latitudeDelta: 0.003,
                 longitudeDelta: 0.003,
             }, 1000);
@@ -39,9 +82,45 @@ const DeliveryScreen = ({ navigation }) => {
                 mapType='standard'
             >
                 <Marker
+                    coordinate={current}
+                    title="Current Location"
+                    description="You are here"
+                />
+
+                <Marker
                     coordinate={markerLocation}
                     title="Foody"
                     description="Fast Food, Full Flavor!"
+                />
+
+                <Circle
+                    center={current}
+                    radius={30}
+                    stroke = "#5b5b5c"
+                    fillColor = "#ebf5fb"
+                />
+
+                <Polyline
+                    coordinates={[current,
+                        {
+                            latitude: 10.030546,
+                            longitude: 105.768730,
+                        },
+                        {
+                            latitude: 10.028967,
+                            longitude: 105.771207,
+                        },
+                        {
+                            latitude: 10.027356,
+                            longitude: 105.769793,
+                        },
+                        {
+                            latitude: 10.026932,
+                            longitude: 105.77044,
+                        },
+                        markerLocation]}
+                    strokeColor="#3760db"
+                    strokeWidth={3}
                 />
             </MapView>
 

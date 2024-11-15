@@ -10,7 +10,7 @@ import numeral from 'numeral';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { firebaseAuth, firestoreDB } from '../firebase.config';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, addDoc } from 'firebase/firestore';
 
 const CartScreen = ({navigation}) => {
   const {setCartItems, cartItems, handleAdd, handleRemove, subTotal, total, shippingFee, setQuantityCart} = useContext(CartContext);
@@ -50,13 +50,19 @@ const CartScreen = ({navigation}) => {
   const handlePlaceOrder = async () => {
     if(deliveryAddress.trim()){
       if (cartItems.length > 0) {
-        const orderDetails = {
+        const orderRef = collection(firestoreDB, 'orders');
+        const orderData = {
           user: userData,
-          total: total
+          total: total,
+          deliveryAddress,
+          cartItems,
+          deliveryType,
+          deliveryDate,
+          createdAt: Date.now(),
         };
         
         try {
-          await pushOrderToMySQL(orderDetails);
+          await addDoc(orderRef, orderData);
           alert("Order placed successfully!");
           setCartItems([]);
           setQuantityCart(0);
@@ -71,20 +77,6 @@ const CartScreen = ({navigation}) => {
       }
     } else {
       alert("Enter delivery address");
-    }
-  };
-
-  const pushOrderToMySQL = async (orderDetails) => {
-    const response = await fetch('http://localhost:3000/orders', { //place the IPV4 address
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(orderDetails),
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to place order');
     }
   };
 

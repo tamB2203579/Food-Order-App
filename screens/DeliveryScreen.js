@@ -9,30 +9,6 @@ const DeliveryScreen = ({ navigation }) => {
     const [location, setLocation] = useState();
     const mapRef = useRef(null);
 
-    // const initialLocation = {
-    //     latitude: 10.029200,
-    //     longitude: 105.768852,
-    //     latitudeDelta: 0.01,
-    //     longitudeDelta: 0.01,
-    // };
-
-    // const markerLocation = {
-    //     latitude: 10.031,
-    //     longitude: 105.762,
-    // };
-
-    // const initialLocation = {
-    //     latitude: location.latitude,
-    //     longitude: location.longitude,
-    //     latitudeDelta: 0.01,
-    //     longitudeDelta: 0.01,
-    // };
-
-    // const markerLocation = {
-    //     latitude: location.latitude,
-    //     longitude: location.longitude,
-    // };
-
     const initialLocation = {
         latitude: 10.031289,
         longitude: 105.769156,
@@ -119,7 +95,7 @@ const DeliveryScreen = ({ navigation }) => {
                             longitude: 105.77044,
                         },
                         markerLocation]}
-                    strokeColor="#3760db"
+                    strokeColor="hotpink"
                     strokeWidth={3}
                 />
             </MapView>
@@ -132,7 +108,7 @@ const DeliveryScreen = ({ navigation }) => {
                         </Text>
 
                         <Text className="text-3xl font-extrabold text-gray-700">
-                            15-20 minutes
+                            10-20 minutes
                         </Text>
 
                         <Text className="mt-2 text-gray-700 font-semibold">Your order is own its way!</Text>

@@ -7,6 +7,7 @@ import * as Location from 'expo-location';
 
 const DeliveryScreen = ({ navigation }) => {
     const [location, setLocation] = useState();
+    const [showPolyline, setShowPolyline] = useState(false);
     const mapRef = useRef(null);
 
     const initialLocation = {
@@ -25,6 +26,7 @@ const DeliveryScreen = ({ navigation }) => {
         latitude: 10.027034,
         longitude: 105.770529,
     };
+
     
 
     useEffect(() => {
@@ -41,10 +43,16 @@ const DeliveryScreen = ({ navigation }) => {
         getPermissions();
         if (mapRef.current) {
             mapRef.current.animateToRegion({
-                ...current,
+                ...markerLocation,
                 latitudeDelta: 0.003,
                 longitudeDelta: 0.003,
             }, 1000);
+
+            const timer = setTimeout(() => {
+                setShowPolyline(true);
+            }, 4000);
+    
+            return () => clearTimeout(timer);
         }
     }, []);
 
@@ -76,28 +84,32 @@ const DeliveryScreen = ({ navigation }) => {
                     fillColor = "#ebf5fb"
                 />
 
-                <Polyline
-                    coordinates={[current,
-                        {
-                            latitude: 10.030546,
-                            longitude: 105.768730,
-                        },
-                        {
-                            latitude: 10.028967,
-                            longitude: 105.771207,
-                        },
-                        {
-                            latitude: 10.027356,
-                            longitude: 105.769793,
-                        },
-                        {
-                            latitude: 10.026932,
-                            longitude: 105.77044,
-                        },
-                        markerLocation]}
-                    strokeColor="hotpink"
-                    strokeWidth={3}
-                />
+{showPolyline && (
+                    <Polyline
+                        coordinates={[
+                            current,
+                            {
+                                latitude: 10.030546,
+                                longitude: 105.76873,
+                            },
+                            {
+                                latitude: 10.028967,
+                                longitude: 105.771207,
+                            },
+                            {
+                                latitude: 10.027356,
+                                longitude: 105.769793,
+                            },
+                            {
+                                latitude: 10.026932,
+                                longitude: 105.77044,
+                            },
+                            markerLocation,
+                        ]}
+                        strokeColor="hotpink"
+                        strokeWidth={3}
+                    />
+                )}
             </MapView>
 
             <View className="rounded-t-3xl -mt-12 bg-white relative">
